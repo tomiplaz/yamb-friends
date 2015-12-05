@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:numColumns="5"
+        android:background="#000"
+        android:layout_margin="5dp"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:layout_alignParentTop="true"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView1"
+        android:layout_below="@id/gridView"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_1"
+        android:contentDescription="@string/description_dice1"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView2"
+        android:layout_below="@id/gridView"
+        android:layout_toRightOf="@id/diceView1"
+        android:layout_toEndOf="@id/diceView1"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_2"
+        android:contentDescription="@string/description_dice2"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView3"
+        android:layout_below="@id/gridView"
+        android:layout_toRightOf="@id/diceView2"
+        android:layout_toEndOf="@id/diceView2"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_3"
+        android:contentDescription="@string/description_dice3"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView4"
+        android:layout_below="@id/gridView"
+        android:layout_toRightOf="@id/diceView3"
+        android:layout_toEndOf="@id/diceView3"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_4"
+        android:contentDescription="@string/description_dice4"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView5"
+        android:layout_below="@id/gridView"
+        android:layout_toRightOf="@id/diceView4"
+        android:layout_toEndOf="@id/diceView4"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_5"
+        android:contentDescription="@string/description_dice5"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dice_size"
+        android:layout_height="@dimen/dice_size"
+        android:id="@+id/diceView6"
+        android:layout_below="@id/gridView"
+        android:layout_toRightOf="@id/diceView5"
+        android:layout_toEndOf="@id/diceView5"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/dice_6"
+        android:contentDescription="@string/description_dice6"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        android:layout_below="@id/diceView1"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:text="@string/roll_text"
+        />
+
+</RelativeLayout>

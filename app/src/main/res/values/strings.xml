@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Yamb Friends</string>
+
+    <string name="_X_X">Extra super special.</string>
+    <string name="_1_X">Sum of 1s.</string>
+    <string name="_2_X">Sum of 2s.</string>
+    <string name="_3_X">Sum of 3s.</string>
+    <string name="_4_X">Sum of 4s.</string>
+    <string name="_5_X">Sum of 5s.</string>
+    <string name="_6_X">Sum of 6s.</string>
+    <string name="_EQ1_X">Sum of upper rows (1s to 6s). If equal or higher than 60, 30 more is added.</string>
+    <string name="_MAX_X">Maximum. The higher the sum, the better.</string>
+    <string name="_MIN_X">Minimum. The lower the sum, the better.</string>
+    <string name="_EQ2_X">Product of 1s and maximum-minimum difference.</string>
+    <string name="_STR_X">Straight. 1&#8211;5 or 2&#8211;6. 66 for the 1st roll, 56 for the 2nd and 46 for the 3rd.</string>
+    <string name="_FUL_X">Full. Two of a kind alongside three of a another kind.</string>
+    <string name="_POK_X">Poker. Four of a kind.</string>
+    <string name="_YMB_X">Yamb. Five of a kind.</string>
+    <string name="_EQ3_X">Sum of upper rows (straight, full, poker and yamb).</string>
+    <string name="_X_DWN">Down column.</string>
+    <string name="_X_ANY">Open column.</string>
+    <string name="_X_UP">Up column.</string>
+    <string name="_X_AN1">Column for announcements after the 1st roll.</string>
+    <string name="_X_AN0">Column for announcements before the 1st roll.</string>
+
+    <string name="roll_text">Roll</string>
+
+    <string name="description_dice1">First dice.</string>
+    <string name="description_dice2">Second dice.</string>
+    <string name="description_dice3">Third dice.</string>
+    <string name="description_dice4">Fourth dice.</string>
+    <string name="description_dice5">Fifth dice.</string>
+    <string name="description_dice6">Sixth dice.</string>
+</resources>
