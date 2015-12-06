@@ -17,6 +17,7 @@ public class Grid {
     private List<String> listCells;
     private int numOfCols;
     private String announcedCellName = null;
+    private boolean inputDone = false;
 
     Grid(boolean preRollAnnouncement) {
         // Set number of columns to 5 if preRollAnnouncement column is included
@@ -76,6 +77,31 @@ public class Grid {
         return availableCells;
     }
 
+    public boolean onlyLeftAn1() {
+        return this.getAvailableCells().contains("^(dwn|any|up)");
+    }
+
+    public boolean isGameFinished() {
+        // ...
+        return false;
+    }
+
+    public String getAnnouncedCellName() {
+        return this.announcedCellName;
+    }
+
+    public void setAnnouncedCellName(String cellName) {
+        this.announcedCellName = cellName;
+    }
+
+    public boolean getInputDone() {
+        return this.inputDone;
+    }
+
+    public void setInputDone(boolean value) {
+        this.inputDone = value;
+    }
+
     public String positionToCellName(int position) {
         return this.ROW_NAMES.get(position / (this.numOfCols + 1) - 1) + "_" + this.COL_NAMES.get(position % (this.numOfCols + 1) - 1);
     }
@@ -89,7 +115,7 @@ public class Grid {
         this.gameModel.put(cellName, value);
     }
 
-    List<String> getListCells() {
+    public List<String> getListCells() {
         return listCells;
     }
 }

@@ -86,10 +86,46 @@ public class GameActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Integer> randoms = dice.getRandoms();
+                if (grid.isGameFinished()) {
+                    if (dice.getRollNumber() == 3 && !grid.getInputDone()) {
+                        Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_LONG).show();
+                    }
+
+                    if (grid.getInputDone()) {
+                        for (int i = 0; i < dice.getQuantity(); i++) {
+                            // deselect each dice
+                        }
+                        dice.setRollNumber(0);
+                        grid.setInputDone(false);
+                        grid.setAnnouncedCellName(null);
+                    }
+
+                    if (dice.getRollNumber() < 3 && !grid.getInputDone()) {
+                        if (dice.getRollNumber() == 1 && grid.onlyLeftAn1() && grid.getAnnouncedCellName() == null) {
+                            Toast.makeText(getApplicationContext(), "Announcement required!", Toast.LENGTH_LONG).show();
+                        } else {
+                            dice.incrementRollNumber();
+                            for (int i = 0; i < dice.getQuantity(); i++) {
+                                // memorize selected dice
+                            }
+                            for (int i = 0; i < dice.getQuantity(); i++) {
+                                // assign new random to non-selected dice
+                            }
+
+                            if (grid.getAnnouncedCellName() == null) {
+                                // onlyAnn = false;
+                                // new available cells
+                                // if (onlyAnn) onlyAnn = true;
+                            }
+
+                            // show rollNumber in view
+                        }
+                    }
+                }
+                /*List<Integer> randoms = dice.getRandoms();
                 for (int i = 0; i < dice.getQuantity(); i++) {
                     ivDice.get("dice_" + (i + 1)).setImageResource(getResources().getIdentifier("dice_" + randoms.get(i), "drawable", getPackageName()));
-                }
+                }*/
             }
         });
     }
