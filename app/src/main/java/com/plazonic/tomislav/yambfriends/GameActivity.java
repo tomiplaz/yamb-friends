@@ -1,5 +1,6 @@
 package com.plazonic.tomislav.yambfriends;
 
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,21 @@ public class GameActivity extends AppCompatActivity {
         final Map<String, ImageView> ivDice = new HashMap<>(dice.getQuantity(), 1);
         if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.diceView6).getParent()).removeView(findViewById(R.id.diceView6));
         for (int i = 0; i < dice.getQuantity(); i++) {
-            ivDice.put("dice_" + (i + 1), (ImageView) findViewById(diceIds[i]));
+            ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(diceIds[i]));
+            ivDice.get("ivDice" + (i + 1)).setTag(false);
+            ivDice.get("ivDice" + (i + 1)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageView iv = (ImageView) v;
+                    if ((boolean) iv.getTag()) {
+                        iv.clearColorFilter();
+                        iv.setTag(false);
+                    } else {
+                        iv.setColorFilter(R.color.diceGray);
+                        iv.setTag(true);
+                    }
+                }
+            });
         }
 
         final Grid grid = new Grid(true); // change constant to input value
