@@ -1,6 +1,7 @@
 package com.plazonic.tomislav.yambfriends;
 
 import android.graphics.PorterDuff;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -32,20 +34,13 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < dice.getQuantity(); i++) {
             ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(diceIds[i]));
             ivDice.get("ivDice" + (i + 1)).setTag(false);
-            ivDice.get("ivDice" + (i + 1)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageView iv = (ImageView) v;
-                    if ((boolean) iv.getTag()) {
-                        iv.clearColorFilter();
-                        iv.setTag(false);
-                    } else {
-                        iv.setColorFilter(R.color.diceGray);
-                        iv.setTag(true);
-                    }
-                }
-            });
         }
+
+        final TextView tvRollNo = (TextView) findViewById(R.id.rollNo);
+        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
+
+        final Chronometer cmTimer = (Chronometer) findViewById(R.id.timer);
+        cmTimer.setTag(false);
 
         final Grid grid = new Grid(true); // change constant to input value
         GridView gvGrid = (GridView) findViewById(R.id.gridView);
@@ -97,34 +92,48 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Button b1 = (Button) findViewById(R.id.button1);
-        b1.setOnClickListener(new View.OnClickListener() {
+        Button btnRoll = (Button) findViewById(R.id.rollBtn);
+        btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (grid.isGameFinished()) {
+                if (!grid.isGameFinished()) {
+                    if (!(boolean) cmTimer.getTag()) {
+                        cmTimer.setBase(SystemClock.elapsedRealtime());
+                        cmTimer.start();
+                        cmTimer.setTag(true);
+                    } else {
+                        // temp
+                        cmTimer.stop();
+                        cmTimer.setTag(false);
+                    }
+
                     if (dice.getRollNumber() == 3 && !grid.getInputDone()) {
-                        Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
                     }
 
                     if (grid.getInputDone()) {
                         for (int i = 0; i < dice.getQuantity(); i++) {
-                            // deselect each dice
+                            ivDice.get("ivDice" + (i + 1)).setTag(false);
+                            ivDice.get("ivDice" + (i + 1)).clearColorFilter();
                         }
                         dice.setRollNumber(0);
+                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                         grid.setInputDone(false);
                         grid.setAnnouncedCellName(null);
                     }
 
                     if (dice.getRollNumber() < 3 && !grid.getInputDone()) {
                         if (dice.getRollNumber() == 1 && grid.onlyLeftAn1() && grid.getAnnouncedCellName() == null) {
-                            Toast.makeText(getApplicationContext(), "Announcement required!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Announcement required!", Toast.LENGTH_SHORT).show();
                         } else {
                             dice.incrementRollNumber();
+                            tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                             for (int i = 0; i < dice.getQuantity(); i++) {
-                                // memorize selected dice
-                            }
-                            for (int i = 0; i < dice.getQuantity(); i++) {
-                                // assign new random to non-selected dice
+                                if (!(boolean) ivDice.get("ivDice" + (i + 1)).getTag()) {
+                                    int newRandom = dice.getRandom();
+                                    dice.setDice(i, newRandom);
+                                    ivDice.get("ivDice" + (i + 1)).setImageResource(getResources().getIdentifier("dice_" + newRandom, "drawable", getPackageName()));
+                                }
                             }
 
                             if (grid.getAnnouncedCellName() == null) {
@@ -132,16 +141,22 @@ public class GameActivity extends AppCompatActivity {
                                 // new available cells
                                 // if (onlyAnn) onlyAnn = true;
                             }
-
-                            // show rollNumber in view
                         }
                     }
                 }
-                /*List<Integer> randoms = dice.getRandoms();
-                for (int i = 0; i < dice.getQuantity(); i++) {
-                    ivDice.get("dice_" + (i + 1)).setImageResource(getResources().getIdentifier("dice_" + randoms.get(i), "drawable", getPackageName()));
-                }*/
             }
         });
     }
+
+    public void diceClick(View v) {
+        ImageView iv = (ImageView) v;
+        if ((boolean) iv.getTag()) {
+            iv.clearColorFilter();
+            iv.setTag(false);
+        } else {
+            iv.setColorFilter(R.color.diceGray);
+            iv.setTag(true);
+        }
+    }
+
 }

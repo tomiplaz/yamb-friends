@@ -24,6 +24,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_1"
         android:contentDescription="@string/description_dice1"
+        android:onClick="diceClick"
         />
 
     <ImageView
@@ -37,6 +38,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_2"
         android:contentDescription="@string/description_dice2"
+        android:onClick="diceClick"
         />
 
     <ImageView
@@ -50,6 +52,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_3"
         android:contentDescription="@string/description_dice3"
+        android:onClick="diceClick"
         />
 
     <ImageView
@@ -63,6 +66,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_4"
         android:contentDescription="@string/description_dice4"
+        android:onClick="diceClick"
         />
 
     <ImageView
@@ -76,6 +80,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_5"
         android:contentDescription="@string/description_dice5"
+        android:onClick="diceClick"
         />
 
     <ImageView
@@ -89,17 +94,42 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/dice_6"
         android:contentDescription="@string/description_dice6"
+        android:onClick="diceClick"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button1"
+        android:id="@+id/rollBtn"
         android:layout_below="@id/diceView1"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:textSize="20sp"
         android:text="@string/roll_text"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rollNo"
+        android:layout_below="@id/diceView1"
+        android:layout_toRightOf="@id/rollBtn"
+        android:layout_toEndOf="@id/rollBtn"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer"
+        android:layout_below="@id/diceView1"
+        android:layout_toRightOf="@id/rollNo"
+        android:layout_toEndOf="@id/rollNo"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
         />
 
 </RelativeLayout>

@@ -18,3 +18,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent().setClass(getBaseContext(), GameActivity.class));
     }
 }
+
+/*
+ group dice under a group layout
+ group other views under another group layout
+ selected dice: new drawable or something else?
+ cell onclick: select cell; new cell onclick: do input
+ handle backbutton click while in game
+ stop timer onexit
+ */

@@ -10,10 +10,15 @@ import java.util.Random;
 public class Dice {
     private int quantity;
     private int rollNumber;
+    private List<Integer> dice;
 
     Dice(int quantity) {
         this.quantity = quantity;
         this.rollNumber = 0;
+        this.dice = new ArrayList<>(quantity);
+        for (int i = 0; i < quantity; i++) {
+            this.dice.add(0);
+        }
     }
 
     public int getQuantity() {
@@ -32,15 +37,12 @@ public class Dice {
         this.rollNumber++;
     }
 
-    public List<Integer> getRandoms() {
-        Random rand = new Random();
-        List<Integer> randoms = new ArrayList<>(this.quantity);
+    public int getRandom() {
+        return new Random().nextInt(6) + 1;
+    }
 
-        for (int i = 0; i < this.quantity; i++) {
-            randoms.add(i, rand.nextInt(6) + 1);
-        }
-
-        return randoms;
+    public void setDice(int index, int number) {
+        this.dice.set(index, number);
     }
 }
 
