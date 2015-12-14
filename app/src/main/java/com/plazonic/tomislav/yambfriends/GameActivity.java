@@ -1,6 +1,5 @@
 package com.plazonic.tomislav.yambfriends;
 
-import android.graphics.PorterDuff;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
@@ -42,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
         final Chronometer cmTimer = (Chronometer) findViewById(R.id.timer);
         cmTimer.setTag(false);
 
-        final Grid grid = new Grid(true); // change constant to input value
+        final Grid grid = new Grid(false); // change constant to input value
         GridView gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
 
@@ -56,7 +54,18 @@ public class GameActivity extends AppCompatActivity {
                 if (position / nCol == 0 || position % nCol == 0) {
                     String text = getResources().getString(getResources().getIdentifier("_" + cellName, "string", getPackageName()));
                     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                } else if (grid.getAvailableCells().contains(grid.positionToCellName(position))) {
+                } else if (grid.getAvailableCells().contains(cellName) && dice.getRollNumber() > 0) {
+                    if (dice.getRollNumber() == 1 && grid.getCellColName(cellName).equals("an1") && grid.getAnnouncedCellName() == null) {
+                        // ...
+                        grid.setAnnouncedCellName(cellName);
+                    } else {
+                        int result = dice.calculateInput(grid.getCellRowName(cellName));
+                        grid.updateModelValue(cellName, result);
+                        ((TextView) view).setText(String.format("%d", result));
+                        grid.setLastInputCellName(cellName);
+                        grid.setInputDone(true);
+                        // ...
+                    }
                     //if ()
                     /*
                     treat position as an id or as a cellName?
@@ -97,17 +106,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
+                    // temp
                     if (!(boolean) cmTimer.getTag()) {
                         cmTimer.setBase(SystemClock.elapsedRealtime());
                         cmTimer.start();
                         cmTimer.setTag(true);
                     } else {
-                        // temp
                         cmTimer.stop();
                         cmTimer.setTag(false);
                     }
 
-                    if (dice.getRollNumber() == 3 && !grid.getInputDone()) {
+                    if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                         Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
                     }
 
@@ -117,7 +126,6 @@ public class GameActivity extends AppCompatActivity {
                             ivDice.get("ivDice" + (i + 1)).clearColorFilter();
                         }
                         dice.setRollNumber(0);
-                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                         grid.setInputDone(false);
                         grid.setAnnouncedCellName(null);
                     }
@@ -143,6 +151,8 @@ public class GameActivity extends AppCompatActivity {
                             }
                         }
                     }
+
+                    tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                 }
             }
         });

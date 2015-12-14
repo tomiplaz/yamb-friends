@@ -18,6 +18,8 @@ public class Grid {
     private int numOfCols;
     private String announcedCellName = null;
     private boolean inputDone = false;
+    private String lastInputCellName = null;
+    private List<String> lastSumCellsNames = new ArrayList<>(2);
 
     Grid(boolean preRollAnnouncement) {
         // Set number of columns to 5 if preRollAnnouncement column is included
@@ -45,6 +47,10 @@ public class Grid {
         return playable ? numOfCols : numOfCols + 1;
     }
 
+    public List<String> getListCells() {
+        return listCells;
+    }
+
     public List getAvailableCells() {
         List<String> availableCells = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
         String currentCellName;
@@ -69,6 +75,7 @@ public class Grid {
                             break;
                         default:
                             if (this.gameModel.get(currentCellName).equals(-1)) availableCells.add(currentCellName);
+                            break;
                     }
                 }
             }
@@ -78,7 +85,28 @@ public class Grid {
     }
 
     public boolean onlyLeftAn1() {
-        return this.getAvailableCells().contains("^(dwn|any|up)");
+        return !this.getAvailableCells().contains("^(dwn|any|up)");
+    }
+
+    public boolean onlyLeftAn0() {
+        // ...
+        return false;
+    }
+
+    public void handleFinishedSections() {
+        this.lastSumCellsNames.clear();
+
+        for (int i = 0; i < this.numOfCols; i++) {
+            if (this.gameModel.get("eq1_" + this.COL_NAMES.get(i)) == -1) {
+
+            }
+            if (this.gameModel.get("eq2_" + this.COL_NAMES.get(i)) == -1) {
+
+            }
+            if (this.gameModel.get("eq3_" + this.COL_NAMES.get(i)) == -1) {
+
+            }
+        }
     }
 
     public boolean isGameFinished() {
@@ -102,6 +130,14 @@ public class Grid {
         this.inputDone = value;
     }
 
+    public String getLastInputCellName() {
+        return this.lastInputCellName;
+    }
+
+    public void setLastInputCellName(String cellName) {
+        this.lastInputCellName = cellName;
+    }
+
     public String positionToCellName(int position) {
         return this.ROW_NAMES.get(position / (this.numOfCols + 1) - 1) + "_" + this.COL_NAMES.get(position % (this.numOfCols + 1) - 1);
     }
@@ -111,11 +147,15 @@ public class Grid {
         return (this.numOfCols + 1) * (this.ROW_NAMES.indexOf(cellNameSplit[0]) + 1) + (this.COL_NAMES.indexOf(cellNameSplit[1]) + 1);
     }
 
-    public void updateModelValue(String cellName, Integer value) {
-        this.gameModel.put(cellName, value);
+    public String getCellRowName(String cellName) {
+        return cellName.split("_")[0];
     }
 
-    public List<String> getListCells() {
-        return listCells;
+    public String getCellColName(String cellName) {
+        return cellName.split("_")[1];
+    }
+
+    public void updateModelValue(String cellName, Integer value) {
+        this.gameModel.put(cellName, value);
     }
 }
