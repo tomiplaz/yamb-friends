@@ -1,2 +1,2 @@
 # yamb-friends
-Yamb application that I'm doing as part of my studies for a subject called Mobile Application Development.
+Android application I'm working on for my master's degree.
