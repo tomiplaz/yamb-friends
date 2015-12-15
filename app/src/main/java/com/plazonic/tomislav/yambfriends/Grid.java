@@ -93,18 +93,63 @@ public class Grid {
         return false;
     }
 
-    public void handleFinishedSections() {
+    public void handleCompletedSections() {
         this.lastSumCellsNames.clear();
+        boolean isCompleted;
+        int sum;
 
         for (int i = 0; i < this.numOfCols; i++) {
             if (this.gameModel.get("eq1_" + this.COL_NAMES.get(i)) == -1) {
-
+                isCompleted = true;
+                sum = 0;
+                for (String rowName : new String[]{"1", "2", "3", "4", "5", "6"}) {
+                    if (this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i)) == -1) {
+                        isCompleted = false;
+                        break;
+                    } else {
+                        sum += this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i));
+                    }
+                }
+                if (isCompleted) {
+                    if (sum > 59) sum += 30;
+                    this.gameModel.put("eq1_" + this.COL_NAMES.get(i), sum);
+                    this.lastSumCellsNames.add("eq1_" + this.COL_NAMES.get(i));
+                }
             }
+
             if (this.gameModel.get("eq2_" + this.COL_NAMES.get(i)) == -1) {
-
+                isCompleted = true;
+                for (String rowName : new String[]{"1", "max", "min"}) {
+                    if (this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i)) == -1) {
+                        isCompleted = false;
+                        break;
+                    }
+                }
+                if (isCompleted) {
+                    sum = this.gameModel.get("max_" + this.COL_NAMES.get(i));
+                    sum -= this.gameModel.get("min_" + this.COL_NAMES.get(i));
+                    sum *= this.gameModel.get("1_" + this.COL_NAMES.get(i));
+                    if (sum < 0) sum = 0;
+                    this.gameModel.put("eq2_" + this.COL_NAMES.get(i), sum);
+                    this.lastSumCellsNames.add("eq2_" + this.COL_NAMES.get(i));
+                }
             }
-            if (this.gameModel.get("eq3_" + this.COL_NAMES.get(i)) == -1) {
 
+            if (this.gameModel.get("eq3_" + this.COL_NAMES.get(i)) == -1) {
+                isCompleted = true;
+                sum = 0;
+                for (String rowName : new String[]{"str", "ful", "pok", "ymb"}) {
+                    if (this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i)) == -1) {
+                        isCompleted = false;
+                        break;
+                    } else {
+                        sum += this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i));
+                    }
+                }
+                if (isCompleted) {
+                    this.gameModel.put("eq3_" + this.COL_NAMES.get(i), sum);
+                    this.lastSumCellsNames.add("eq3_" + this.COL_NAMES.get(i));
+                }
             }
         }
     }

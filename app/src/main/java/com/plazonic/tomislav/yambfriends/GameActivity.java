@@ -66,6 +66,8 @@ public class GameActivity extends AppCompatActivity {
                         grid.setInputDone(true);
                         // ...
                     }
+                    // after checkEnd(), update view based on lastSumCellsNames;
+
                     //if ()
                     /*
                     treat position as an id or as a cellName?
