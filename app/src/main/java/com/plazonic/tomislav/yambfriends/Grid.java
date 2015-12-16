@@ -1,5 +1,6 @@
 package com.plazonic.tomislav.yambfriends;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -93,7 +94,7 @@ public class Grid {
         return false;
     }
 
-    public void handleCompletedSections() {
+    public void checkCompletedSections() {
         this.lastSumCellsNames.clear();
         boolean isCompleted;
         int sum;
@@ -183,6 +184,10 @@ public class Grid {
         this.lastInputCellName = cellName;
     }
 
+    public List<String> getLastSumCellsNames() {
+        return this.lastSumCellsNames;
+    }
+
     public String positionToCellName(int position) {
         return this.ROW_NAMES.get(position / (this.numOfCols + 1) - 1) + "_" + this.COL_NAMES.get(position % (this.numOfCols + 1) - 1);
     }
@@ -202,5 +207,9 @@ public class Grid {
 
     public void updateModelValue(String cellName, Integer value) {
         this.gameModel.put(cellName, value);
+    }
+
+    public Integer getModelValue(String cellName) {
+        return this.gameModel.get(cellName);
     }
 }

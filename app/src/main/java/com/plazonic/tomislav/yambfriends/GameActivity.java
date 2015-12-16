@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class GameActivity extends AppCompatActivity {
         cmTimer.setTag(false);
 
         final Grid grid = new Grid(false); // change constant to input value
-        GridView gvGrid = (GridView) findViewById(R.id.gridView);
+        final GridView gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
 
         ListAdapter gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
@@ -66,7 +67,17 @@ public class GameActivity extends AppCompatActivity {
                         grid.setInputDone(true);
                         // ...
                     }
-                    // after checkEnd(), update view based on lastSumCellsNames;
+                    grid.checkCompletedSections();
+                    if (!grid.getLastSumCellsNames().isEmpty()) {
+                        List<String> lastSumCellsNames = grid.getLastSumCellsNames();
+                        TextView tv;
+                        // update view with lastSumCellsNames
+                        for (int i = 0; i < lastSumCellsNames.size(); i++) {
+                            tv = (TextView) gvGrid.getItemAtPosition(grid.cellNameToPosition(lastSumCellsNames.get(i)));
+                            tv.setText(String.format("%d", grid.getModelValue(lastSumCellsNames.get(i))));
+                        }
+                    }
+                    if (grid.isGameFinished())
 
                     //if ()
                     /*
