@@ -61,12 +61,13 @@ public class GameActivity extends AppCompatActivity {
                         grid.setAnnouncedCellName(cellName);
                     } else {
                         int result = dice.calculateInput(grid.getCellRowName(cellName));
-                        grid.updateModelValue(cellName, result);
+                        grid.setModelValue(cellName, result);
                         ((TextView) view).setText(String.format("%d", result));
                         grid.setLastInputCellName(cellName);
                         grid.setInputDone(true);
                         // ...
                     }
+
                     grid.checkCompletedSections();
                     if (!grid.getLastSumCellsNames().isEmpty()) {
                         List<String> lastSumCellsNames = grid.getLastSumCellsNames();
@@ -77,39 +78,11 @@ public class GameActivity extends AppCompatActivity {
                             tv.setText(String.format("%d", grid.getModelValue(lastSumCellsNames.get(i))));
                         }
                     }
-                    if (grid.isGameFinished())
 
-                    //if ()
-                    /*
-                    treat position as an id or as a cellName?
-                    rethink variable names
-                    if (isAvailable(position)) {
-                        if (roll == 1 && col == 'ann' && !announced[0]) {
-                            make all cells unavailable
-                            make position available
-                            announced = [true, position]
-                        }
-                    } else {
-                        calculatedInput = calculateInput(rowString or position);
-                        save calculatedInput to model
-                        display calculatedInput to view
-                        lastInput = [modelPosition, position]
-                        inputDone = true
-                        make all cells unavailable
+                    if (grid.isGameFinished()) {
+                        grid.calculateFinalResult();
+                        Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
                     }
-                    checkEnd()
-                    if (checkFin()) {
-                        finalResult = sum of all sub-sums
-                        save game to database
-                        inform user of final result and game finish
-                    }
-                     */
-                    // if (value == "") this.handleClickedInput(cellName);
-
-                    // updateModel
-                    grid.updateModelValue(grid.positionToCellName(position), position);
-                    TextView tv = (TextView) view;
-                    tv.setText(String.format("%d", position));
                 }
             }
         });
@@ -166,6 +139,38 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     tvRollNo.setText(String.format("%d", dice.getRollNumber()));
+                }
+            }
+        });
+
+        Button btnUndo = (Button) findViewById(R.id.undoBtn);
+        btnUndo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!grid.isGameFinished()) {
+                    if (grid.getInputDone()) {
+                        grid.setModelValue(grid.getLastInputCellName(), -1);
+                        // update view @GameActivity
+
+                        if (grid.getAnnouncedCellName() == null) {
+                            // available ...
+                        } else {
+                            // available announced ...
+                        }
+
+                        if (grid.getLastSumCellsNames().size() > 0) {
+                            for (int i = 0; i < grid.getLastSumCellsNames().size(); i++) {
+                                grid.setModelValue(grid.getLastSumCellsNames().get(i), -1);
+                                // update view @GameActivity
+                            }
+                        }
+
+                        grid.setInputDone(false);
+                    }
+
+                    if (dice.getRollNumber() == 1 && grid.getAnnouncedCellName() != null) {
+
+                    }
                 }
             }
         });

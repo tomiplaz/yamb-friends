@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/startBtn"
         android:layout_height="50dp"
         android:layout_width="100dp"
         android:text="@string/app_name"

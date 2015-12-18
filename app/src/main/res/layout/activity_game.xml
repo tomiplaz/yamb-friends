@@ -132,4 +132,17 @@
         android:textSize="20dp"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/undoBtn"
+        android:layout_below="@id/diceView1"
+        android:layout_toRightOf="@id/timer"
+        android:layout_toEndOf="@id/timer"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:text="@string/undo_text"
+        />
+
 </RelativeLayout>

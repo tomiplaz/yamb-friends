@@ -1,6 +1,5 @@
 package com.plazonic.tomislav.yambfriends;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ public class Grid {
     private boolean inputDone = false;
     private String lastInputCellName = null;
     private List<String> lastSumCellsNames = new ArrayList<>(2);
+    private int finalResult = -1;
 
     Grid(boolean preRollAnnouncement) {
         // Set number of columns to 5 if preRollAnnouncement column is included
@@ -156,8 +156,12 @@ public class Grid {
     }
 
     public boolean isGameFinished() {
-        // ...
-        return false;
+        for (int i = 0; i < this.numOfCols; i++) {
+            for (String rowName : new String[]{"eq1", "eq2", "eq3"}) {
+                if (this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i)) == -1) return false;
+            }
+        }
+        return true;
     }
 
     public String getAnnouncedCellName() {
@@ -205,11 +209,31 @@ public class Grid {
         return cellName.split("_")[1];
     }
 
-    public void updateModelValue(String cellName, Integer value) {
+    public void setModelValue(String cellName, Integer value) {
         this.gameModel.put(cellName, value);
     }
 
     public Integer getModelValue(String cellName) {
         return this.gameModel.get(cellName);
+    }
+
+    public void setFinalResult(int finalResult) {
+        this.finalResult = finalResult;
+    }
+
+    public int getFinalResult() {
+        return this.finalResult;
+    }
+
+    public void calculateFinalResult() {
+        int finalResult = 0;
+
+        for (int i = 0; i < this.numOfCols; i++) {
+            for (String rowName : new String[]{"eq1", "eq2", "eq3"}) {
+                finalResult += this.gameModel.get(rowName + "_" + this.COL_NAMES.get(i));
+            }
+        }
+
+        this.finalResult = finalResult;
     }
 }
