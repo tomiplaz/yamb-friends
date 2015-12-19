@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
  * handle backbutton click while in game
  * stop timer onexit
  *
+ * http://developer.android.com/guide/components/processes-and-threads.html
  *
- *
- *
+ * available cells related actions to functions
  *
  *
  *

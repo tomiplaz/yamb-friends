@@ -21,6 +21,7 @@ public class Grid {
     private String lastInputCellName = null;
     private List<String> lastSumCellsNames = new ArrayList<>(2);
     private int finalResult = -1;
+    private List<String> allInputCellsNames;
 
     Grid(boolean preRollAnnouncement) {
         // Set number of columns to 5 if preRollAnnouncement column is included
@@ -35,11 +36,20 @@ public class Grid {
         }
 
         // Initialize List for GridView (add each cellValue to List in order)
-        listCells = new ArrayList<>(16 * (this.numOfCols + 1));
+        this.listCells = new ArrayList<>(16 * (this.numOfCols + 1));
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < this.numOfCols + 1; j++) {
-                if (j == 0) listCells.add(i == 0 ? "X" : this.ROW_NAMES.get(i - 1));
-                else listCells.add(i == 0 ? this.COL_NAMES.get(j - 1) : "");
+                if (j == 0) this.listCells.add(i == 0 ? "X" : this.ROW_NAMES.get(i - 1));
+                else this.listCells.add(i == 0 ? this.COL_NAMES.get(j - 1) : "");
+            }
+        }
+
+        // Initialize List that contains names of all input cells
+        this.allInputCellsNames = new ArrayList<>(12 * this.numOfCols);
+        for (int i = 0; i < 15; i++) {
+            if (this.ROW_NAMES.get(i).startsWith("eq")) continue;
+            for (int j = 0; j < this.numOfCols; j++) {
+                this.allInputCellsNames.add(this.ROW_NAMES.get(i) + "_" + this.COL_NAMES.get(j));
             }
         }
     }
@@ -49,10 +59,10 @@ public class Grid {
     }
 
     public List<String> getListCells() {
-        return listCells;
+        return this.listCells;
     }
 
-    public List getAvailableCells() {
+    public List<String> getAvailableCellsNames() {
         List<String> availableCells = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
         String currentCellName;
         String cellNameToAdd = null;
@@ -85,13 +95,14 @@ public class Grid {
         return availableCells;
     }
 
-    public boolean onlyLeftAn1() {
-        return !this.getAvailableCells().contains("^(dwn|any|up)");
-    }
-
-    public boolean onlyLeftAn0() {
-        // ...
-        return false;
+    public boolean onlyLeftColumn(String colName) {
+        for (String cellName : this.getAvailableCellsNames()) {
+            for (int i = 0; i < this.numOfCols; i++) {
+                if (this.COL_NAMES.get(i).equals(colName)) continue;
+                if (cellName.endsWith(this.COL_NAMES.get(i))) return false;
+            }
+        }
+        return true;
     }
 
     public void checkCompletedSections() {
@@ -190,6 +201,10 @@ public class Grid {
 
     public List<String> getLastSumCellsNames() {
         return this.lastSumCellsNames;
+    }
+
+    public List<String> getAllInputCellsNames() {
+        return this.allInputCellsNames;
     }
 
     public String positionToCellName(int position) {
