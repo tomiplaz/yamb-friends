@@ -48,9 +48,14 @@ public class GameActivity extends AppCompatActivity {
         ListAdapter gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
         gvGrid.setAdapter(gvAdapter);
 
-        for (String cellName : grid.getAllInputCellsNames()) {
+        // change ListAdapter to ArrayAdapter<String> and use .insert()
+
+        /*for (String cellName : grid.getAllInputCellsNames()) {
             gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
-        }
+        }*/
+
+        //System.out.println(grid.cellNameToPosition("1_dwn"));
+        //gvGrid.getChildAt(grid.cellNameToPosition("1_dwn")).setTag(false);
 
         gvGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,10 +65,10 @@ public class GameActivity extends AppCompatActivity {
                 if (position / nCol == 0 || position % nCol == 0) {
                     String text = getResources().getString(getResources().getIdentifier("_" + clickedCellName, "string", getPackageName()));
                     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                } else if (!(boolean) gvGrid.getChildAt(grid.cellNameToPosition(clickedCellName)).getTag() && dice.getRollNumber() > 0) {
+                } else if (!(boolean) parent.getChildAt(grid.cellNameToPosition(clickedCellName)).getTag() && dice.getRollNumber() > 0) {
                     if (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1") && grid.getAnnouncedCellName() == null) {
                         for (String cellName : grid.getAllInputCellsNames()) {
-                            gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
+                            parent.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
                         }
                         view.setTag(true);
                         grid.setAnnouncedCellName(clickedCellName);
@@ -74,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
                         grid.setLastInputCellName(clickedCellName);
                         grid.setInputDone(true);
                         for (String cellName : grid.getAllInputCellsNames()) {
-                            gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
+                            parent.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
                         }
                     }
 
@@ -83,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
                         List<String> lastSumCellsNames = grid.getLastSumCellsNames();
                         // update view with lastSumCellsNames
                         for (int i = 0; i < lastSumCellsNames.size(); i++) {
-                            TextView tv = (TextView) gvGrid.getChildAt(grid.cellNameToPosition(lastSumCellsNames.get(i)));
+                            TextView tv = (TextView) parent.getChildAt(grid.cellNameToPosition(lastSumCellsNames.get(i)));
                             tv.setText(String.format("%d", grid.getModelValue(lastSumCellsNames.get(i))));
                         }
                     }
