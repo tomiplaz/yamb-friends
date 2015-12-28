@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,17 +44,8 @@ public class GameActivity extends AppCompatActivity {
         final GridView gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
 
-        ListAdapter gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
+        final ArrayAdapter<String> gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
         gvGrid.setAdapter(gvAdapter);
-
-        // change ListAdapter to ArrayAdapter<String> and use .insert()
-
-        /*for (String cellName : grid.getAllInputCellsNames()) {
-            gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
-        }*/
-
-        //System.out.println(grid.cellNameToPosition("1_dwn"));
-        //gvGrid.getChildAt(grid.cellNameToPosition("1_dwn")).setTag(false);
 
         gvGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,22 +55,19 @@ public class GameActivity extends AppCompatActivity {
                 if (position / nCol == 0 || position % nCol == 0) {
                     String text = getResources().getString(getResources().getIdentifier("_" + clickedCellName, "string", getPackageName()));
                     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                } else if (!(boolean) parent.getChildAt(grid.cellNameToPosition(clickedCellName)).getTag() && dice.getRollNumber() > 0) {
+                } else if (grid.getAvailableCellsNames().contains(clickedCellName) && dice.getRollNumber() > 0) {
+                    // handle dice.getRollNumber() == 0
                     if (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1") && grid.getAnnouncedCellName() == null) {
-                        for (String cellName : grid.getAllInputCellsNames()) {
-                            parent.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
-                        }
-                        view.setTag(true);
                         grid.setAnnouncedCellName(clickedCellName);
+                        grid.updateAvailableCellsNames();
                     } else {
                         int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
                         grid.setModelValue(clickedCellName, result);
-                        ((TextView) view).setText(String.format("%d", result));
+                        grid.updateListCells(clickedCellName, Integer.toString(result));
+                        gvAdapter.notifyDataSetChanged();
                         grid.setLastInputCellName(clickedCellName);
                         grid.setInputDone(true);
-                        for (String cellName : grid.getAllInputCellsNames()) {
-                            parent.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
-                        }
+                        grid.clearAvailableCellsNames();
                     }
 
                     grid.checkCompletedSections();
@@ -88,8 +75,8 @@ public class GameActivity extends AppCompatActivity {
                         List<String> lastSumCellsNames = grid.getLastSumCellsNames();
                         // update view with lastSumCellsNames
                         for (int i = 0; i < lastSumCellsNames.size(); i++) {
-                            TextView tv = (TextView) parent.getChildAt(grid.cellNameToPosition(lastSumCellsNames.get(i)));
-                            tv.setText(String.format("%d", grid.getModelValue(lastSumCellsNames.get(i))));
+                            grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
+                            gvAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -106,15 +93,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
-                    // temp
-                    if (!(boolean) cmTimer.getTag()) {
+                    /*if (!(boolean) cmTimer.getTag()) {
                         cmTimer.setBase(SystemClock.elapsedRealtime());
                         cmTimer.start();
                         cmTimer.setTag(true);
                     } else {
                         cmTimer.stop();
                         cmTimer.setTag(false);
-                    }
+                    }*/
 
                     if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                         Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
@@ -144,14 +130,7 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             }
 
-                            if (grid.getAnnouncedCellName() == null) {
-                                for (String cellName : grid.getAllInputCellsNames()) {
-                                    gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(false);
-                                }
-                                for (String cellName: grid.getAvailableCellsNames()) {
-                                    gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(true);
-                                }
-                            }
+                            if (grid.getAnnouncedCellName() == null) grid.updateAvailableCellsNames();
                         }
                     }
 
@@ -166,24 +145,16 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
                     if (grid.getInputDone()) {
-                        TextView tv;
                         grid.setModelValue(grid.getLastInputCellName(), -1);
-                        tv = (TextView) gvGrid.getChildAt(grid.cellNameToPosition(grid.getLastInputCellName()));
-                        tv.setText("");
-
-                        if (grid.getAnnouncedCellName() == null) {
-                            for (String cellName : grid.getAvailableCellsNames()) {
-                                gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(true);
-                            }
-                        } else {
-                            gvGrid.getChildAt(grid.cellNameToPosition(grid.getAnnouncedCellName())).setTag(true);
-                        }
+                        grid.updateListCells(grid.getLastInputCellName(), "");
+                        gvAdapter.notifyDataSetChanged();
+                        grid.updateAvailableCellsNames();
 
                         if (grid.getLastSumCellsNames().size() > 0) {
                             for (int i = 0; i < grid.getLastSumCellsNames().size(); i++) {
                                 grid.setModelValue(grid.getLastSumCellsNames().get(i), -1);
-                                tv = (TextView) gvGrid.getChildAt(grid.cellNameToPosition(grid.getLastSumCellsNames().get(i)));
-                                tv.setText("");
+                                grid.updateListCells(grid.getLastSumCellsNames().get(i), "");
+                                gvAdapter.notifyDataSetChanged();
                             }
                         }
 
@@ -191,11 +162,8 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     if (dice.getRollNumber() == 1 && grid.getAnnouncedCellName() != null) {
-                        gvGrid.getChildAt(grid.cellNameToPosition(grid.getAnnouncedCellName())).setTag(true);
                         grid.setAnnouncedCellName(null);
-                        for (String cellName : grid.getAvailableCellsNames()) {
-                            gvGrid.getChildAt(grid.cellNameToPosition(cellName)).setTag(true);
-                        }
+                        grid.updateAvailableCellsNames();
                     }
                 }
             }

@@ -16,12 +16,12 @@ public class Grid {
     private Map<String, Integer> gameModel;
     private List<String> listCells;
     private int numOfCols;
+    private List<String> availableCellsNames;
     private String announcedCellName = null;
     private boolean inputDone = false;
     private String lastInputCellName = null;
     private List<String> lastSumCellsNames = new ArrayList<>(2);
     private int finalResult = -1;
-    private List<String> allInputCellsNames;
 
     Grid(boolean preRollAnnouncement) {
         // Set number of columns to 5 if preRollAnnouncement column is included
@@ -35,21 +35,16 @@ public class Grid {
             }
         }
 
+        // Initialize List for available cells
+        this.availableCellsNames = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
+        this.updateAvailableCellsNames();
+
         // Initialize List for GridView (add each cellValue to List in order)
         this.listCells = new ArrayList<>(16 * (this.numOfCols + 1));
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < this.numOfCols + 1; j++) {
                 if (j == 0) this.listCells.add(i == 0 ? "X" : this.ROW_NAMES.get(i - 1));
                 else this.listCells.add(i == 0 ? this.COL_NAMES.get(j - 1) : "");
-            }
-        }
-
-        // Initialize List that contains names of all input cells
-        this.allInputCellsNames = new ArrayList<>(12 * this.numOfCols);
-        for (int i = 0; i < 15; i++) {
-            if (this.ROW_NAMES.get(i).startsWith("eq")) continue;
-            for (int j = 0; j < this.numOfCols; j++) {
-                this.allInputCellsNames.add(this.ROW_NAMES.get(i) + "_" + this.COL_NAMES.get(j));
             }
         }
     }
@@ -62,14 +57,27 @@ public class Grid {
         return this.listCells;
     }
 
+    public void updateListCells(String cellName, String value) {
+        this.listCells.set(this.cellNameToPosition(cellName), value);
+    }
+
     public List<String> getAvailableCellsNames() {
-        List<String> availableCells = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
-        String currentCellName;
-        String cellNameToAdd = null;
+        return this.availableCellsNames;
+    }
+
+    public void clearAvailableCellsNames() {
+        this.availableCellsNames.clear();
+    }
+
+    public void updateAvailableCellsNames() {
+        this.clearAvailableCellsNames();
 
         if (this.announcedCellName != null) {
-            availableCells.add(announcedCellName);
+            this.availableCellsNames.add(announcedCellName);
         } else {
+            String currentCellName;
+            String cellNameToAdd = null;
+
             for (int i = 0; i < this.numOfCols; i++) {
                 rowIterator: for (int j = 0; j < 15; j++) {
                     if (this.ROW_NAMES.get(j).contains("eq")) continue;
@@ -77,26 +85,24 @@ public class Grid {
                     switch (this.COL_NAMES.get(i)) {
                         case "dwn":
                             if (this.gameModel.get(currentCellName).equals(-1)) {
-                                availableCells.add(currentCellName);
+                                this.availableCellsNames.add(currentCellName);
                                 break rowIterator;
                             } else break;
                         case "up":
                             if (this.gameModel.get(currentCellName).equals(-1)) cellNameToAdd = currentCellName;
-                            if (j == 13 && cellNameToAdd != null) availableCells.add(cellNameToAdd);
+                            if (j == 13 && cellNameToAdd != null) this.availableCellsNames.add(cellNameToAdd);
                             break;
                         default:
-                            if (this.gameModel.get(currentCellName).equals(-1)) availableCells.add(currentCellName);
+                            if (this.gameModel.get(currentCellName).equals(-1)) this.availableCellsNames.add(currentCellName);
                             break;
                     }
                 }
             }
         }
-
-        return availableCells;
     }
 
     public boolean onlyLeftColumn(String colName) {
-        for (String cellName : this.getAvailableCellsNames()) {
+        for (String cellName : this.availableCellsNames) {
             for (int i = 0; i < this.numOfCols; i++) {
                 if (this.COL_NAMES.get(i).equals(colName)) continue;
                 if (cellName.endsWith(this.COL_NAMES.get(i))) return false;
@@ -201,10 +207,6 @@ public class Grid {
 
     public List<String> getLastSumCellsNames() {
         return this.lastSumCellsNames;
-    }
-
-    public List<String> getAllInputCellsNames() {
-        return this.allInputCellsNames;
     }
 
     public String positionToCellName(int position) {
