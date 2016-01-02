@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGame(View v) {
         startActivity(new Intent().setClass(getBaseContext(), GameActivity.class));
+    }
+
+    public void goToSettings(View v) {
+        startActivity(new Intent().setClass(getBaseContext(), SettingsActivity.class));
     }
 }
 
