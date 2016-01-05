@@ -36,6 +36,7 @@
     <string name="description_dice5">Fifth dice.</string>
     <string name="description_dice6">Sixth dice.</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_includeColumnAn0">Include an0 column</string>
+    <string name="settings_diceCount">Number of dice</string>
+    <string name="settings_diceCount_default">4</string>
 </resources>
