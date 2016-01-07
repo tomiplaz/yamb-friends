@@ -13,8 +13,11 @@ public class SettingsFragment extends PreferenceFragment {
             Preference changedPreference = findPreference(key);
 
             switch (key) {
+                case "settings_preRollAnnouncementColumn":
+                    changedPreference.setSummary(settings.getBoolean(key, false) ? "Include" : "Don't include");
+                    break;
                 case "settings_diceCount":
-                    changedPreference.setSummary(settings.getString(key, ""));
+                    changedPreference.setSummary("Use " + settings.getString(key, "5") + " dice");
                     break;
                 default:
                     break;
@@ -27,6 +30,13 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
+
+        // Set preferences' summaries onCreate
+        SharedPreferences settings = getPreferenceScreen().getSharedPreferences();
+        String key = "settings_preRollAnnouncementColumn";
+        findPreference(key).setSummary(settings.getBoolean(key, false) ? "Include" : "Don't include");
+        key = "settings_diceCount";
+        findPreference(key).setSummary("Use " + settings.getString(key, "5") + " dice");
     }
 
     @Override

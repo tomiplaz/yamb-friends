@@ -36,9 +36,7 @@
     <string name="description_dice5">Fifth dice.</string>
     <string name="description_dice6">Sixth dice.</string>
 
-    <string name="settings_includeColumnAn0">Include column An0</string>
-    <string name="settings_includeColumnAn0_summary">Include "Preroll Announcement" column</string>
-    <string name="settings_diceCount">Number of dice</string>
+    <string name="settings_preRollAnnouncementColumn_title">Pre-roll Announcement column</string>
+    <string name="settings_diceCount_title">Number of dice</string>
     <string name="settings_diceCount_default">5</string>
-    <string name="settings_diceCount_summary">Five dice</string>
 </resources>

@@ -4,20 +4,18 @@
     <PreferenceCategory
         android:title="@string/settings_text">
         <CheckBoxPreference
-            android:key="settings_includeColumnAn0"
-            android:title="@string/settings_includeColumnAn0"
+            android:key="settings_preRollAnnouncementColumn"
+            android:title="@string/settings_preRollAnnouncementColumn_title"
             android:defaultValue="false"
-            android:summary="@string/settings_includeColumnAn0_summary"
             android:persistent="true">
         </CheckBoxPreference>
         <ListPreference
             android:key="settings_diceCount"
-            android:title="@string/settings_diceCount"
-            android:dialogTitle="@string/settings_diceCount"
+            android:title="@string/settings_diceCount_title"
+            android:dialogTitle="@string/settings_diceCount_title"
             android:defaultValue="@string/settings_diceCount_default"
-            android:summary="@string/settings_diceCount_summary"
             android:entries="@array/settings_diceCount_entries"
-            android:entryValues="@array/settings_diceCount_values"
+            android:entryValues="@array/settings_diceCount_entries"
             android:persistent="true">
         </ListPreference>
     </PreferenceCategory>
