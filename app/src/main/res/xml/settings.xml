@@ -7,6 +7,7 @@
             android:key="settings_includeColumnAn0"
             android:title="@string/settings_includeColumnAn0"
             android:defaultValue="false"
+            android:summary="@string/settings_includeColumnAn0_summary"
             android:persistent="true">
         </CheckBoxPreference>
         <ListPreference
@@ -14,6 +15,7 @@
             android:title="@string/settings_diceCount"
             android:dialogTitle="@string/settings_diceCount"
             android:defaultValue="@string/settings_diceCount_default"
+            android:summary="@string/settings_diceCount_summary"
             android:entries="@array/settings_diceCount_entries"
             android:entryValues="@array/settings_diceCount_values"
             android:persistent="true">
