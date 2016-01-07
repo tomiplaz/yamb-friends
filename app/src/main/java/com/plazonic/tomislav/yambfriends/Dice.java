@@ -92,7 +92,7 @@ public class Dice {
                 for (int x : values) {
                     if (Collections.frequency(this.dice, x) >= 3) {
                         for (int y : values) {
-                            if (y == x) break;
+                            if (y == x) continue;
                             if (Collections.frequency(this.dice, y) >= 2) {
                                 result = 3 * x + 2 * y + 30;
                             }
