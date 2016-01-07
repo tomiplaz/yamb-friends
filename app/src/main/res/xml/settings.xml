@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings_text">
+        <CheckBoxPreference
+            android:key="settings_preRollAnnouncementColumn"
+            android:title="@string/settings_preRollAnnouncementColumn_title"
+            android:defaultValue="false"
+            android:persistent="true">
+        </CheckBoxPreference>
+        <ListPreference
+            android:key="settings_diceCount"
+            android:title="@string/settings_diceCount_title"
+            android:dialogTitle="@string/settings_diceCount_title"
+            android:defaultValue="@string/settings_diceCount_default"
+            android:entries="@array/settings_diceCount_entries"
+            android:entryValues="@array/settings_diceCount_entries"
+            android:persistent="true">
+        </ListPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,6 +1,8 @@
 package com.plazonic.tomislav.yambfriends;
 
+import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +27,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        final Dice dice = new Dice(5);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        final Dice dice = new Dice(Integer.parseInt(settings.getString("settings_diceCount", "5")));
         final int[] diceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
         final Map<String, ImageView> ivDice = new HashMap<>(dice.getQuantity(), 1);
         if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.diceView6).getParent()).removeView(findViewById(R.id.diceView6));
@@ -40,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
         final Chronometer cmTimer = (Chronometer) findViewById(R.id.timer);
         cmTimer.setTag(false);
 
-        final Grid grid = new Grid(false); // change constant to input value
+        final Grid grid = new Grid(settings.getBoolean("settings_preRollAnnouncementColumn", false));
         final GridView gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
 

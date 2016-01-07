@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Yamb Friends</string>
 
+    <string name="play_text">Play</string>
+    <string name="settings_text">Settings</string>
+
     <string name="_X_X">Extra super special.</string>
     <string name="_1_X">Sum of 1s.</string>
     <string name="_2_X">Sum of 2s.</string>
@@ -32,4 +35,8 @@
     <string name="description_dice4">Fourth dice.</string>
     <string name="description_dice5">Fifth dice.</string>
     <string name="description_dice6">Sixth dice.</string>
+
+    <string name="settings_preRollAnnouncementColumn_title">Pre-roll Announcement column</string>
+    <string name="settings_diceCount_title">Number of dice</string>
+    <string name="settings_diceCount_default">5</string>
 </resources>
