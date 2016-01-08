@@ -110,7 +110,7 @@ public class Dice {
             case "ymb":
                 for (int x : values) {
                     if (Collections.frequency(this.dice, x) >= 5) {
-                        result = 5 * x + 40;
+                        result = 5 * x + 50;
                     }
                 }
                 break;
