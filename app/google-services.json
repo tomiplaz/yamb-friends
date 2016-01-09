@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "yamb-friends",
+    "project_number": "569663352855",
+    "name": "Yamb Friends"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569663352855:android:37230f2318859e1a",
+        "client_id": "android:com.plazonic.tomislav.yambfriends",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.plazonic.tomislav.yambfriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569663352855-of5fejmi231v04uirbjo0bntee82nbj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plazonic.tomislav.yambfriends",
+            "certificate_hash": "D0D4806AB20780DF28F437096E179EBB5895EAA9"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

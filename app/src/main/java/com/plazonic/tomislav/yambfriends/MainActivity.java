@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     }
 
@@ -21,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSettings(View v) {
         startActivity(new Intent().setClass(getBaseContext(), SettingsActivity.class));
+    }
+
+    public void goToSignIn(View v) {
+        startActivity(new Intent().setClass(getBaseContext(), SignInActivity.class));
     }
 }
 

@@ -11,7 +11,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/playBtn"
+        android:id="@+id/play_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/play_text"
@@ -19,12 +19,21 @@
     </Button>
 
     <Button
-        android:id="@+id/settingsBtn"
+        android:id="@+id/settings_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@id/playBtn"
+        android:layout_below="@id/play_button"
         android:text="@string/settings_text"
         android:onClick="goToSettings">
+    </Button>
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/settings_button"
+        android:text="@string/sign_in_text"
+        android:onClick="goToSignIn">
     </Button>
 
 </RelativeLayout>
