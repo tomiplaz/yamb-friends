@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
@@ -22,14 +23,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleApiClient googleApiClient;
-    private TextView tvAccountInfo;
+    private TextView tvProfileInfoSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        tvAccountInfo = (TextView) findViewById(R.id.account_info);
+        tvProfileInfoSignIn = (TextView) findViewById(R.id.profile_info_sign_in);
 
         findViewById(R.id.google_sign_in_button).setOnClickListener(this);
         findViewById(R.id.google_sign_out_button).setOnClickListener(this);
@@ -39,6 +40,18 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
         googleApiClient =
                 new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+        if (optionalPendingResult.isDone()) {
+            Log.d(TAG, "Successful cached sign in");
+            GoogleSignInResult googleSignInResult = optionalPendingResult.get();
+            handleGoogleSignInResult(googleSignInResult);
+        }
     }
 
     @Override
@@ -101,12 +114,13 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         );
     }
 
-    private void handleGoogleSignInResult (GoogleSignInResult googleSignInResult) {
+    private void handleGoogleSignInResult(GoogleSignInResult googleSignInResult) {
         if (googleSignInResult.isSuccess()) {
             GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-            tvAccountInfo.setText(googleSignInAccount.getDisplayName() + ", " + googleSignInAccount.getId());
+            tvProfileInfoSignIn.setText("Signed in as \n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
             updateUI(true);
         } else {
+            tvProfileInfoSignIn.setText(R.string.not_signed_in);
             updateUI(false);
         }
     }

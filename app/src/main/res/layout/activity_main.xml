@@ -33,4 +33,11 @@
         android:text="@string/sign_in_text"
         android:onClick="goToSignIn" />
 
+    <TextView
+        android:id="@+id/profile_info_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_in_button"
+        android:text="@string/not_signed_in"/>
+
 </RelativeLayout>

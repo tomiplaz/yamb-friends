@@ -5,6 +5,7 @@
     <string name="settings_text">Settings</string>
     <string name="sign_in_text">Sign In</string>
 
+    <string name="not_signed_in">You are not signed in!</string>
     <string name="sign_out_text">Sign Out</string>
     <string name="disconnect_text">Disconnect</string>
 
