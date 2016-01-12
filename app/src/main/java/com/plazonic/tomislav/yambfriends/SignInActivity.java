@@ -48,9 +48,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (optionalPendingResult.isDone()) {
-            Log.d(TAG, "Successful cached sign in");
             GoogleSignInResult googleSignInResult = optionalPendingResult.get();
             handleGoogleSignInResult(googleSignInResult);
+        } else {
+            updateUI(false, null);
         }
     }
 
@@ -97,7 +98,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        updateUI(false);
+                        updateUI(false, null);
                     }
                 }
         );
@@ -108,7 +109,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        updateUI(false);
+                        updateUI(false, null);
                     }
                 }
         );
@@ -117,21 +118,21 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private void handleGoogleSignInResult(GoogleSignInResult googleSignInResult) {
         if (googleSignInResult.isSuccess()) {
             GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-            tvProfileInfoSignIn.setText("Signed in as \n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
-            updateUI(true);
+            updateUI(true, googleSignInAccount);
         } else {
-            tvProfileInfoSignIn.setText(R.string.not_signed_in);
-            updateUI(false);
+            updateUI(false, null);
         }
     }
 
-    private void updateUI(boolean signedIn) {
+    private void updateUI(boolean signedIn, GoogleSignInAccount googleSignInAccount) {
         if (signedIn) {
             findViewById(R.id.google_sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.google_sign_out_disconnect).setVisibility(View.VISIBLE);
+            tvProfileInfoSignIn.setText("Signed in as \n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
         } else {
             findViewById(R.id.google_sign_out_disconnect).setVisibility(View.GONE);
             findViewById(R.id.google_sign_in_button).setVisibility(View.VISIBLE);
+            tvProfileInfoSignIn.setText(R.string.not_signed_in);
         }
     }
 
