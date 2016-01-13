@@ -14,7 +14,7 @@
         android:id="@+id/play_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/play_text"
+        android:text="@string/play_button"
         android:onClick="startGame" />
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_below="@id/play_button"
-        android:text="@string/settings_text"
+        android:text="@string/settings_button"
         android:onClick="goToSettings" />
 
     <Button
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_below="@id/settings_button"
-        android:text="@string/sign_in_text"
+        android:text="@string/sign_in_button"
         android:onClick="goToSignIn" />
 
     <TextView

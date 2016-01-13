@@ -26,13 +26,13 @@
             android:id="@+id/google_sign_out_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_out_text" />
+            android:text="@string/sign_out_button" />
 
         <Button
             android:id="@+id/google_disconnect_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/disconnect_text" />
+            android:text="@string/disconnect_button" />
 
     </LinearLayout>
 

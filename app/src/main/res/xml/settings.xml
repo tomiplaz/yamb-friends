@@ -2,7 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/settings_text">
+        android:title="@string/settings_button">
         <CheckBoxPreference
             android:key="settings_preRollAnnouncementColumn"
             android:title="@string/settings_preRollAnnouncementColumn_title"
