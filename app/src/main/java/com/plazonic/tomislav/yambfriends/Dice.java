@@ -10,6 +10,7 @@ import java.util.Random;
  * Created by Tomo on 11/30/2015.
  */
 public class Dice {
+
     private int quantity;
     private int rollNumber;
     private List<Integer> dice;
@@ -120,5 +121,6 @@ public class Dice {
 
         return result;
     }
+
 }
 

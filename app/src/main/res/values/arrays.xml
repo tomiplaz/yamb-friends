@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settings_diceCount_entries">
+    <string-array name="settings_dice_count_entries">
         <item>5</item>
         <item>6</item>
     </string-array>

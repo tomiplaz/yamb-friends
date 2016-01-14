@@ -10,6 +10,7 @@ import java.util.Map;
  * Created by Tomo on 10/31/2015.
  */
 public class Grid {
+
     // use JavaDoc extensively
     private final List<String> ROW_NAMES = Arrays.asList("1", "2", "3", "4", "5", "6", "eq1", "max", "min", "eq2", "str", "ful", "pok", "ymb", "eq3");
     private final List<String> COL_NAMES = Arrays.asList("dwn", "any", "up", "an1", "an0");
@@ -23,9 +24,9 @@ public class Grid {
     private List<String> lastSumCellsNames = new ArrayList<>(2);
     private int finalResult = -1;
 
-    Grid(boolean preRollAnnouncement) {
-        // Set number of columns to 5 if preRollAnnouncement column is included
-        this.numOfCols = preRollAnnouncement ? 5 : 4;
+    Grid(boolean an0Column) {
+        // Set number of columns to 5 if an0Column is included
+        this.numOfCols = an0Column ? 5 : 4;
 
         // Initialize model (map each cellName to -1, e.g. "1_dwn": -1)
         this.gameModel = new HashMap<>(15 * this.numOfCols, 1);
@@ -253,4 +254,5 @@ public class Grid {
 
         this.finalResult = finalResult;
     }
+
 }

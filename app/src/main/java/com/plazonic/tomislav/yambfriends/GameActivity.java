@@ -3,6 +3,7 @@ package com.plazonic.tomislav.yambfriends;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,35 +24,39 @@ import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
+    private TextView tvRollNo;
+    private Chronometer cmTimer;
+    private Dice dice;
+    private Map<String, ImageView> ivDice;
+    private Grid grid;
+    private ArrayAdapter<String> gvAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        final Dice dice = new Dice(Integer.parseInt(settings.getString("settings_diceCount", "5")));
-        final int[] diceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
-        final Map<String, ImageView> ivDice = new HashMap<>(dice.getQuantity(), 1);
+        dice = new Dice(Integer.parseInt(settings.getString("settings_dice_count", "5")));
+        int[] diceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
+        ivDice = new HashMap<>(dice.getQuantity(), 1);
         if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.diceView6).getParent()).removeView(findViewById(R.id.diceView6));
         for (int i = 0; i < dice.getQuantity(); i++) {
             ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(diceIds[i]));
             ivDice.get("ivDice" + (i + 1)).setTag(false);
         }
 
-        final TextView tvRollNo = (TextView) findViewById(R.id.rollNo);
+        tvRollNo = (TextView) findViewById(R.id.rollNo);
         tvRollNo.setText(String.format("%d", dice.getRollNumber()));
 
-        final Chronometer cmTimer = (Chronometer) findViewById(R.id.timer);
+        cmTimer = (Chronometer) findViewById(R.id.timer);
         cmTimer.setTag(false);
 
-        final Grid grid = new Grid(settings.getBoolean("settings_preRollAnnouncementColumn", false));
-        final GridView gvGrid = (GridView) findViewById(R.id.gridView);
+        grid = new Grid(settings.getBoolean("settings_an0_column", false));
+        GridView gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
-
-        final ArrayAdapter<String> gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
+        gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
         gvGrid.setAdapter(gvAdapter);
-
         gvGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,34 +65,37 @@ public class GameActivity extends AppCompatActivity {
                 if (position / nCol == 0 || position % nCol == 0) {
                     String text = getResources().getString(getResources().getIdentifier("_" + clickedCellName, "string", getPackageName()));
                     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                } else if (grid.getAvailableCellsNames().contains(clickedCellName) && dice.getRollNumber() > 0) {
-                    // handle dice.getRollNumber() == 0
-                    if (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1") && grid.getAnnouncedCellName() == null) {
-                        grid.setAnnouncedCellName(clickedCellName);
-                        grid.updateAvailableCellsNames();
+                } else if (grid.getAvailableCellsNames().contains(clickedCellName)) {
+                    if (dice.getRollNumber() == 0) {
+                        Toast.makeText(getApplicationContext(), "Roll required!", Toast.LENGTH_SHORT).show();
                     } else {
-                        int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
-                        grid.setModelValue(clickedCellName, result);
-                        grid.updateListCells(clickedCellName, Integer.toString(result));
-                        gvAdapter.notifyDataSetChanged();
-                        grid.setLastInputCellName(clickedCellName);
-                        grid.setInputDone(true);
-                        grid.clearAvailableCellsNames();
-                    }
-
-                    grid.checkCompletedSections();
-                    if (!grid.getLastSumCellsNames().isEmpty()) {
-                        List<String> lastSumCellsNames = grid.getLastSumCellsNames();
-                        // update view with lastSumCellsNames
-                        for (int i = 0; i < lastSumCellsNames.size(); i++) {
-                            grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
+                        if (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1") && grid.getAnnouncedCellName() == null) {
+                            grid.setAnnouncedCellName(clickedCellName);
+                            grid.updateAvailableCellsNames();
+                        } else {
+                            int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
+                            grid.setModelValue(clickedCellName, result);
+                            grid.updateListCells(clickedCellName, Integer.toString(result));
                             gvAdapter.notifyDataSetChanged();
+                            grid.setLastInputCellName(clickedCellName);
+                            grid.setInputDone(true);
+                            grid.clearAvailableCellsNames();
                         }
-                    }
 
-                    if (grid.isGameFinished()) {
-                        grid.calculateFinalResult();
-                        Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+                        grid.checkCompletedSections();
+                        if (!grid.getLastSumCellsNames().isEmpty()) {
+                            List<String> lastSumCellsNames = grid.getLastSumCellsNames();
+                            // update view with lastSumCellsNames
+                            for (int i = 0; i < lastSumCellsNames.size(); i++) {
+                                grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
+                                gvAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        if (grid.isGameFinished()) {
+                            grid.calculateFinalResult();
+                            Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
@@ -98,14 +106,11 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
-                    /*if (!(boolean) cmTimer.getTag()) {
+                    if (!(boolean) cmTimer.getTag()) {
                         cmTimer.setBase(SystemClock.elapsedRealtime());
                         cmTimer.start();
                         cmTimer.setTag(true);
-                    } else {
-                        cmTimer.stop();
-                        cmTimer.setTag(false);
-                    }*/
+                    }
 
                     if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                         Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
@@ -117,6 +122,7 @@ public class GameActivity extends AppCompatActivity {
                             ivDice.get("ivDice" + (i + 1)).clearColorFilter();
                         }
                         dice.setRollNumber(0);
+                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                         grid.setInputDone(false);
                         grid.setAnnouncedCellName(null);
                     }
@@ -173,6 +179,24 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        cmTimer.stop();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        cmTimer.start();
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        cmTimer.stop();
+        super.onDestroy();
     }
 
     @Override
