@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
 
     private TextView tvRollNo;
     private Chronometer cmTimer;
+    private long cmTimerElapsed;
     private Dice dice;
     private Map<String, ImageView> ivDice;
     private Grid grid;
@@ -50,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
         tvRollNo.setText(String.format("%d", dice.getRollNumber()));
 
         cmTimer = (Chronometer) findViewById(R.id.timer);
-        cmTimer.setTag(false);
+        cmTimerElapsed = 0;
 
         grid = new Grid(settings.getBoolean("settings_an0_column", false));
         GridView gvGrid = (GridView) findViewById(R.id.gridView);
@@ -106,12 +107,6 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
-                    if (!(boolean) cmTimer.getTag()) {
-                        cmTimer.setBase(SystemClock.elapsedRealtime());
-                        cmTimer.start();
-                        cmTimer.setTag(true);
-                    }
-
                     if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                         Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
                     }
@@ -183,18 +178,21 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
+        cmTimer.setBase(SystemClock.elapsedRealtime() - cmTimerElapsed);
         cmTimer.start();
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
         super.onDestroy();
     }
