@@ -15,124 +15,118 @@
         android:horizontalSpacing="2dp"
         android:layout_alignParentTop="true" />
 
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView1"
-        android:layout_below="@id/gridView"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_1"
-        android:contentDescription="@string/description_dice1"
-        android:onClick="diceClick" />
-
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView2"
-        android:layout_below="@id/gridView"
-        android:layout_toRightOf="@id/diceView1"
-        android:layout_toEndOf="@id/diceView1"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_2"
-        android:contentDescription="@string/description_dice2"
-        android:onClick="diceClick" />
-
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView3"
-        android:layout_below="@id/gridView"
-        android:layout_toRightOf="@id/diceView2"
-        android:layout_toEndOf="@id/diceView2"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_3"
-        android:contentDescription="@string/description_dice3"
-        android:onClick="diceClick" />
-
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView4"
-        android:layout_below="@id/gridView"
-        android:layout_toRightOf="@id/diceView3"
-        android:layout_toEndOf="@id/diceView3"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_4"
-        android:contentDescription="@string/description_dice4"
-        android:onClick="diceClick" />
-
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView5"
-        android:layout_below="@id/gridView"
-        android:layout_toRightOf="@id/diceView4"
-        android:layout_toEndOf="@id/diceView4"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_5"
-        android:contentDescription="@string/description_dice5"
-        android:onClick="diceClick" />
-
-    <ImageView
-        android:layout_width="@dimen/dice_size"
-        android:layout_height="@dimen/dice_size"
-        android:id="@+id/diceView6"
-        android:layout_below="@id/gridView"
-        android:layout_toRightOf="@id/diceView5"
-        android:layout_toEndOf="@id/diceView5"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/dice_6"
-        android:contentDescription="@string/description_dice6"
-        android:onClick="diceClick" />
-
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rollBtn"
-        android:layout_below="@id/diceView1"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp"
-        android:text="@string/roll_button" />
+        android:id="@+id/dicesLayout"
+        android:layout_below="@id/gridView"
+        android:layout_centerInParent="true">
 
-    <TextView
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView1"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_1"
+            android:contentDescription="@string/description_dice1"
+            android:onClick="diceClick" />
+
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView2"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_2"
+            android:contentDescription="@string/description_dice2"
+            android:onClick="diceClick" />
+
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView3"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_3"
+            android:contentDescription="@string/description_dice3"
+            android:onClick="diceClick" />
+
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView4"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_4"
+            android:contentDescription="@string/description_dice4"
+            android:onClick="diceClick" />
+
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView5"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_5"
+            android:contentDescription="@string/description_dice5"
+            android:onClick="diceClick" />
+
+        <ImageView
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:id="@+id/diceView6"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dice_6"
+            android:contentDescription="@string/description_dice6"
+            android:onClick="diceClick" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rollNo"
-        android:layout_below="@id/diceView1"
-        android:layout_toRightOf="@id/rollBtn"
-        android:layout_toEndOf="@id/rollBtn"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp" />
+        android:id="@+id/otherLayout"
+        android:layout_below="@id/dicesLayout"
+        android:layout_centerInParent="true">
 
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timer"
-        android:layout_below="@id/diceView1"
-        android:layout_toRightOf="@id/rollNo"
-        android:layout_toEndOf="@id/rollNo"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rollBtn"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:text="@string/roll_button" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/undoBtn"
-        android:layout_below="@id/diceView1"
-        android:layout_toRightOf="@id/timer"
-        android:layout_toEndOf="@id/timer"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp"
-        android:text="@string/undo_button" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rollNo"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp" />
+
+        <Chronometer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timer"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/undoBtn"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:text="@string/undo_button" />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

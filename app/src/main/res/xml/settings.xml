@@ -18,6 +18,15 @@
             android:entryValues="@array/settings_dice_count_entries"
             android:persistent="true">
         </ListPreference>
+        <ListPreference
+            android:key="settings_handedness"
+            android:title="@string/settings_handedness_title"
+            android:dialogTitle="@string/settings_handedness_title"
+            android:defaultValue="@string/settings_handedness_default"
+            android:entries="@array/settings_handedness_entries"
+            android:entryValues="@array/settings_handedness_entries"
+            android:persistent="true">
+        </ListPreference>
         <CheckBoxPreference
             android:key="settings_shake_roll"
             android:title="@string/settings_shake_roll_title"

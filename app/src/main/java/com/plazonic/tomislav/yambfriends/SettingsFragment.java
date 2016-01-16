@@ -18,6 +18,9 @@ public class SettingsFragment extends PreferenceFragment {
                 case "settings_dice_count":
                     changedPreference.setSummary("Use " + settings.getString(key, "5") + " dice");
                     break;
+                case "settings_handedness":
+                    changedPreference.setSummary(settings.getString(key, "Right"));
+                    break;
                 case "settings_shake_roll":
                     changedPreference.setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
                     break;
@@ -39,6 +42,8 @@ public class SettingsFragment extends PreferenceFragment {
         findPreference(key).setSummary(settings.getBoolean(key, false) ? "Include" : "Don't include");
         key = "settings_dice_count";
         findPreference(key).setSummary("Use " + settings.getString(key, "5") + " dice");
+        key = "settings_handedness";
+        findPreference(key).setSummary(settings.getString(key, "Right"));
         key = "settings_shake_roll";
         findPreference(key).setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
     }

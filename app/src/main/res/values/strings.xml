@@ -50,5 +50,7 @@
     <string name="settings_an0_column_title">Pre-roll Announcement column</string>
     <string name="settings_dice_count_title">Number of dice</string>
     <string name="settings_dice_count_default">5</string>
+    <string name="settings_handedness_title">Handedness</string>
+    <string name="settings_handedness_default">Right</string>
     <string name="settings_shake_roll_title">Shake roll</string>
 </resources>
