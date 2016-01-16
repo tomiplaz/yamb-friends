@@ -67,36 +67,38 @@ public class GameActivity extends AppCompatActivity {
                     String text = getResources().getString(getResources().getIdentifier("_" + clickedCellName, "string", getPackageName()));
                     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
                 } else if (grid.getAvailableCellsNames().contains(clickedCellName)) {
-                    if (dice.getRollNumber() == 0) {
-                        Toast.makeText(getApplicationContext(), "Roll required!", Toast.LENGTH_SHORT).show();
+                    if (((dice.getRollNumber() == 0 && grid.getCellColName(clickedCellName).equals("an0")) ||
+                    (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1"))) &&
+                    grid.getAnnouncedCellName() == null) {
+                        grid.setAnnouncedCellName(clickedCellName);
+                        grid.updateAvailableCellsNames(dice.getRollNumber());
                     } else {
-                        if (dice.getRollNumber() == 1 && grid.getCellColName(clickedCellName).equals("an1") && grid.getAnnouncedCellName() == null) {
-                            grid.setAnnouncedCellName(clickedCellName);
-                            grid.updateAvailableCellsNames();
-                        } else {
-                            int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
-                            grid.setModelValue(clickedCellName, result);
-                            grid.updateListCells(clickedCellName, Integer.toString(result));
+                        int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
+                        grid.setModelValue(clickedCellName, result);
+                        grid.updateListCells(clickedCellName, Integer.toString(result));
+                        gvAdapter.notifyDataSetChanged();
+                        grid.setLastInputCellName(clickedCellName);
+                        dice.setLastRollNumber(dice.getRollNumber());
+                        grid.setInputDone(true);
+                        dice.setRollNumber(0);
+                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
+                        grid.clearAvailableCellsNames();
+                        grid.setAnnouncedCellName(null);
+                    }
+
+                    grid.checkCompletedSections();
+                    if (!grid.getLastSumCellsNames().isEmpty()) {
+                        List<String> lastSumCellsNames = grid.getLastSumCellsNames();
+                        // update view with lastSumCellsNames
+                        for (int i = 0; i < lastSumCellsNames.size(); i++) {
+                            grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
                             gvAdapter.notifyDataSetChanged();
-                            grid.setLastInputCellName(clickedCellName);
-                            grid.setInputDone(true);
-                            grid.clearAvailableCellsNames();
                         }
+                    }
 
-                        grid.checkCompletedSections();
-                        if (!grid.getLastSumCellsNames().isEmpty()) {
-                            List<String> lastSumCellsNames = grid.getLastSumCellsNames();
-                            // update view with lastSumCellsNames
-                            for (int i = 0; i < lastSumCellsNames.size(); i++) {
-                                grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
-                                gvAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                        if (grid.isGameFinished()) {
-                            grid.calculateFinalResult();
-                            Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
-                        }
+                    if (grid.isGameFinished()) {
+                        grid.calculateFinalResult();
+                        Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -116,14 +118,12 @@ public class GameActivity extends AppCompatActivity {
                             ivDice.get("ivDice" + (i + 1)).setTag(false);
                             ivDice.get("ivDice" + (i + 1)).clearColorFilter();
                         }
-                        dice.setRollNumber(0);
-                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                         grid.setInputDone(false);
                         grid.setAnnouncedCellName(null);
                     }
 
                     if (dice.getRollNumber() < 3 && !grid.getInputDone()) {
-                        if (dice.getRollNumber() == 1 && grid.onlyLeftColumn("an1") && grid.getAnnouncedCellName() == null) {
+                        if (grid.isAnnouncementRequired(dice.getRollNumber())) {
                             Toast.makeText(getApplicationContext(), "Announcement required!", Toast.LENGTH_SHORT).show();
                         } else {
                             dice.incrementRollNumber();
@@ -136,7 +136,7 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             }
 
-                            if (grid.getAnnouncedCellName() == null) grid.updateAvailableCellsNames();
+                            if (grid.getAnnouncedCellName() == null) grid.updateAvailableCellsNames(dice.getRollNumber());
                         }
                     }
 
@@ -151,10 +151,12 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!grid.isGameFinished()) {
                     if (grid.getInputDone()) {
+                        dice.setRollNumber(dice.getLastRollNumber());
+                        tvRollNo.setText(String.format("%d", dice.getRollNumber()));
                         grid.setModelValue(grid.getLastInputCellName(), -1);
                         grid.updateListCells(grid.getLastInputCellName(), "");
                         gvAdapter.notifyDataSetChanged();
-                        grid.updateAvailableCellsNames();
+                        grid.updateAvailableCellsNames(dice.getRollNumber());
 
                         if (grid.getLastSumCellsNames().size() > 0) {
                             for (int i = 0; i < grid.getLastSumCellsNames().size(); i++) {
@@ -165,11 +167,9 @@ public class GameActivity extends AppCompatActivity {
                         }
 
                         grid.setInputDone(false);
-                    }
-
-                    if (dice.getRollNumber() == 1 && grid.getAnnouncedCellName() != null) {
+                    } else if ((dice.getRollNumber() == 0 || dice.getRollNumber() == 1) && grid.getAnnouncedCellName() != null) {
                         grid.setAnnouncedCellName(null);
-                        grid.updateAvailableCellsNames();
+                        grid.updateAvailableCellsNames(dice.getRollNumber());
                     }
                 }
             }
@@ -178,23 +178,23 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        super.onPause();
         cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
-        super.onPause();
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
         cmTimer.setBase(SystemClock.elapsedRealtime() - cmTimerElapsed);
         cmTimer.start();
-        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
-        super.onDestroy();
     }
 
     @Override

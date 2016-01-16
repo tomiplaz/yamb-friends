@@ -13,6 +13,7 @@ public class Dice {
 
     private int quantity;
     private int rollNumber;
+    private int lastRollNumber;
     private List<Integer> dice;
 
     Dice(int quantity) {
@@ -34,6 +35,14 @@ public class Dice {
 
     public void setRollNumber(int rollNumber) {
         this.rollNumber = rollNumber;
+    }
+
+    public int getLastRollNumber() {
+        return this.lastRollNumber;
+    }
+
+    public void setLastRollNumber(int rollNumber) {
+        this.lastRollNumber = rollNumber;
     }
 
     public void incrementRollNumber() {

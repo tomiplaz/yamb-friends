@@ -13,6 +13,7 @@
     <string name="not_signed_in">You are not signed in!</string>
     <string name="sign_out_button">Sign Out</string>
     <string name="disconnect_button">Disconnect</string>
+    <string name="connection_failed">Error connecting Google API client to the service.</string>
 
     <string name="_X_X">Extra super special.</string>
     <string name="_1_X">Sum of 1s.</string>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,7 +19,6 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = "MainActivity";
     private GoogleApiClient googleApiClient;
     private TextView tvProfileInfoMain;
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (optionalPendingResult.isDone()) {
-            Log.d(TAG, "Successful cached sign in");
             GoogleSignInResult googleSignInResult = optionalPendingResult.get();
             if (googleSignInResult.isSuccess()) {
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
@@ -51,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             } else {
                 tvProfileInfoMain.setText(R.string.not_signed_in);
             }
+        } else {
+            tvProfileInfoMain.setText(R.string.not_signed_in);
         }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: " + connectionResult);
+        Toast.makeText(getApplicationContext(), R.string.connection_failed, Toast.LENGTH_LONG).show();
     }
 
     public void startGame(View v) {
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
  *
  * http://developer.android.com/training/basics/activity-lifecycle/index.html
  * http://developer.android.com/guide/components/processes-and-threads.html
- *
+ * disable gvGrid when game is finished
+ * don't waste cpu time for an0 if an0 not included
  * available cells related actions to functions
  *
  * enable ide's vertical line and fix formatting

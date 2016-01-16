@@ -38,7 +38,7 @@ public class Grid {
 
         // Initialize List for available cells
         this.availableCellsNames = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
-        this.updateAvailableCellsNames();
+        this.updateAvailableCellsNames(-1);
 
         // Initialize List for GridView (add each cellValue to List in order)
         this.listCells = new ArrayList<>(16 * (this.numOfCols + 1));
@@ -68,10 +68,20 @@ public class Grid {
 
     public void clearAvailableCellsNames() {
         this.availableCellsNames.clear();
+
+        // So user can make an announcement for An0 column
+        if (this.numOfCols == 5) {
+            String currentCellName;
+            for (int i = 0; i < 15; i++) {
+                if (this.ROW_NAMES.get(i).contains("eq")) continue;
+                currentCellName = this.ROW_NAMES.get(i) + "_an0";
+                if (this.gameModel.get(currentCellName).equals(-1)) this.availableCellsNames.add(currentCellName);
+            }
+        }
     }
 
-    public void updateAvailableCellsNames() {
-        this.clearAvailableCellsNames();
+    public void updateAvailableCellsNames(int rollNumber) {
+        this.availableCellsNames.clear();
 
         if (this.announcedCellName != null) {
             this.availableCellsNames.add(announcedCellName);
@@ -89,12 +99,22 @@ public class Grid {
                                 this.availableCellsNames.add(currentCellName);
                                 break rowIterator;
                             } else break;
+                        case "any":
+                            if (this.gameModel.get(currentCellName).equals(-1)) this.availableCellsNames.add(currentCellName);
+                            break;
                         case "up":
                             if (this.gameModel.get(currentCellName).equals(-1)) cellNameToAdd = currentCellName;
                             if (j == 13 && cellNameToAdd != null) this.availableCellsNames.add(cellNameToAdd);
                             break;
-                        default:
+                        case "an1":
+                            if (rollNumber != -1 && rollNumber != 1) break rowIterator;
                             if (this.gameModel.get(currentCellName).equals(-1)) this.availableCellsNames.add(currentCellName);
+                            break;
+                        case "an0":
+                            if (rollNumber != -1 && rollNumber != 0) break rowIterator;
+                            if (this.gameModel.get(currentCellName).equals(-1)) this.availableCellsNames.add(currentCellName);
+                            break;
+                        default:
                             break;
                     }
                 }
@@ -102,14 +122,48 @@ public class Grid {
         }
     }
 
-    public boolean onlyLeftColumn(String colName) {
-        for (String cellName : this.availableCellsNames) {
-            for (int i = 0; i < this.numOfCols; i++) {
-                if (this.COL_NAMES.get(i).equals(colName)) continue;
-                if (cellName.endsWith(this.COL_NAMES.get(i))) return false;
+    public List<String> getColumnsLeft() {
+        List<String> columnsLeft = new ArrayList<>(this.numOfCols);
+        boolean addColumn;
+        String currentCellName;
+
+        for (int i = 0; i < this.numOfCols; i++) {
+            addColumn = true;
+            rowIterator: for (int j = 0; j < 15; j++) {
+                if (this.ROW_NAMES.get(j).contains("eq")) continue;
+                currentCellName = this.ROW_NAMES.get(j) + "_" + this.COL_NAMES.get(i);
+                if (this.gameModel.get(currentCellName).equals(-1)) {
+                    addColumn = false;
+                    break rowIterator;
+                }
             }
+            if (addColumn) columnsLeft.add(this.COL_NAMES.get(i));
         }
-        return true;
+
+        return columnsLeft;
+    }
+
+    public boolean isAnnouncementRequired(int rollNumber) {
+        if (this.announcedCellName == null) {
+            List<String> columnsLeft = this.getColumnsLeft();
+            if (((this.onlyAn0AndAn1Left(columnsLeft) || this.onlyAn1Left(columnsLeft)) && rollNumber == 1) ||
+                this.onlyAn0Left(columnsLeft) && rollNumber == 0) return true;
+        }
+        return false;
+    }
+
+    public boolean onlyAn0Left(List<String> columnsLeft) {
+        if (this.numOfCols == 4) return false;
+        return columnsLeft.size() == 1 && columnsLeft.contains("an0");
+    }
+
+    public boolean onlyAn1Left(List<String> columnsLeft) {
+        return columnsLeft.size() == 1 && columnsLeft.contains("an1");
+    }
+
+    public boolean onlyAn0AndAn1Left(List<String> columnsLeft) {
+        if (this.numOfCols == 4) return false;
+        return columnsLeft.size() == 2 && columnsLeft.contains("an0") && columnsLeft.contains("an1");
     }
 
     public void checkCompletedSections() {
