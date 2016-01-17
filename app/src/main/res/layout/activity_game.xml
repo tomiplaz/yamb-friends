@@ -13,7 +13,7 @@
         android:layout_margin="5dp"
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_1"
             android:contentDescription="@string/description_dice1"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
         <ImageView
             android:layout_width="@dimen/dice_size"
@@ -40,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_2"
             android:contentDescription="@string/description_dice2"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
         <ImageView
             android:layout_width="@dimen/dice_size"
@@ -50,7 +50,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_3"
             android:contentDescription="@string/description_dice3"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
         <ImageView
             android:layout_width="@dimen/dice_size"
@@ -60,7 +60,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_4"
             android:contentDescription="@string/description_dice4"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
         <ImageView
             android:layout_width="@dimen/dice_size"
@@ -70,7 +70,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_5"
             android:contentDescription="@string/description_dice5"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
         <ImageView
             android:layout_width="@dimen/dice_size"
@@ -80,7 +80,7 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/dice_6"
             android:contentDescription="@string/description_dice6"
-            android:onClick="diceClick" />
+            android:onClick="diceClick"/>
 
     </LinearLayout>
 
@@ -98,7 +98,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
-            android:text="@string/roll_button" />
+            android:text="@string/roll_button"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
             android:id="@+id/rollNo"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <Chronometer
             android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
             android:id="@+id/timer"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
-            android:text="@string/undo_button" />
+            android:text="@string/undo_button"/>
 
     </LinearLayout>
 

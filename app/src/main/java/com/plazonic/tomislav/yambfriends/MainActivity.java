@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             GoogleSignInResult googleSignInResult = optionalPendingResult.get();
             if (googleSignInResult.isSuccess()) {
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-                tvProfileInfoMain.setText("Signed in as \n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
+                tvProfileInfoMain.setText("Signed in as:\n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
             } else {
                 tvProfileInfoMain.setText(R.string.not_signed_in);
             }
