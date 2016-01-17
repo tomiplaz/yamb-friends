@@ -24,6 +24,9 @@ public class SettingsFragment extends PreferenceFragment {
                 case "settings_shake_roll":
                     changedPreference.setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
                     break;
+                case "settings_shake_sensitivity":
+                    changedPreference.setSummary(settings.getString(key, "Medium"));
+                    break;
                 default:
                     break;
             }
@@ -36,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings);
 
-        // Set preferences' summaries onCreate
+        // Set preferences' summaries onCreate.
         SharedPreferences settings = getPreferenceScreen().getSharedPreferences();
         String key = "settings_an0_column";
         findPreference(key).setSummary(settings.getBoolean(key, false) ? "Include" : "Don't include");
@@ -46,18 +49,20 @@ public class SettingsFragment extends PreferenceFragment {
         findPreference(key).setSummary(settings.getString(key, "Right"));
         key = "settings_shake_roll";
         findPreference(key).setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
+        key = "settings_shake_sensitivity";
+        findPreference(key).setSummary(settings.getString(key, "Medium"));
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        super.onPause();
     }
 
     @Override
     public void onResume() {
-        super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        super.onResume();
     }
 
 }

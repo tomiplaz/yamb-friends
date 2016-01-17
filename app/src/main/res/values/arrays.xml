@@ -5,7 +5,12 @@
         <item>6</item>
     </string-array>
     <string-array name="settings_handedness_entries">
-        <item>Left</item>
-        <item>Right</item>
+        <item>Left-handed</item>
+        <item>Right-handed</item>
+    </string-array>
+    <string-array name="settings_shake_sensitivity_entries">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
 </resources>
