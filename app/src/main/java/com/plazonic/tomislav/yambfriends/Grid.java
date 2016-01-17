@@ -44,7 +44,7 @@ public class Grid {
         this.listCells = new ArrayList<>(16 * (this.numOfCols + 1));
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < this.numOfCols + 1; j++) {
-                if (j == 0) this.listCells.add(i == 0 ? "X" : this.ROW_NAMES.get(i - 1));
+                if (j == 0) this.listCells.add(i == 0 ? "x" : this.ROW_NAMES.get(i - 1));
                 else this.listCells.add(i == 0 ? this.COL_NAMES.get(j - 1) : "");
             }
         }
@@ -265,7 +265,10 @@ public class Grid {
     }
 
     public String positionToCellName(int position) {
-        return this.ROW_NAMES.get(position / (this.numOfCols + 1) - 1) + "_" + this.COL_NAMES.get(position % (this.numOfCols + 1) - 1);
+        int nCol = this.getNumOfCols(false);
+        String rowName = (position / nCol == 0 ? "x" : this.ROW_NAMES.get(position / nCol - 1));
+        String colName = (position % nCol == 0 ? "x":  this.COL_NAMES.get(position % nCol - 1));
+        return rowName + "_" + colName;
     }
 
     public int cellNameToPosition(String cellName) {
