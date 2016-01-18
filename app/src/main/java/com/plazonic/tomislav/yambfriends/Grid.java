@@ -25,10 +25,10 @@ public class Grid {
     private int finalResult = -1;
 
     Grid(boolean an0Column) {
-        // Set number of columns to 5 if an0Column is included
+        // Set number of columns to 5 if an0Column is included.
         this.numOfCols = an0Column ? 5 : 4;
 
-        // Initialize model (map each cellName to -1, e.g. "1_dwn": -1)
+        // Initialize model (map each cellName to -1, e.g. "1_dwn": -1).
         this.gameModel = new HashMap<>(15 * this.numOfCols, 1);
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < this.numOfCols; j++) {
@@ -36,15 +36,15 @@ public class Grid {
             }
         }
 
-        // Initialize List for available cells
+        // Initialize List for available cells.
         this.availableCellsNames = new ArrayList<>((this.numOfCols - 2) * 12 + 2);
         this.updateAvailableCellsNames(-1);
 
-        // Initialize List for GridView (add each cellValue to List in order)
+        // Initialize List for GridView (add each cellValue to List in order).
         this.listCells = new ArrayList<>(16 * (this.numOfCols + 1));
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < this.numOfCols + 1; j++) {
-                if (j == 0) this.listCells.add(i == 0 ? "x" : this.ROW_NAMES.get(i - 1));
+                if (j == 0) this.listCells.add(i == 0 ? "YF" : this.ROW_NAMES.get(i - 1));
                 else this.listCells.add(i == 0 ? this.COL_NAMES.get(j - 1) : "");
             }
         }
@@ -69,7 +69,7 @@ public class Grid {
     public void clearAvailableCellsNames() {
         this.availableCellsNames.clear();
 
-        // So user can make an announcement for An0 column
+        // So user can make an announcement for An0 column.
         if (this.numOfCols == 5) {
             String currentCellName;
             for (int i = 0; i < 15; i++) {

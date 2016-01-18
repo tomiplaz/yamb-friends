@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +19,11 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,9 @@ public class GameActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
+
+    private MediaPlayer diceRollSoundPlayer;
+    private boolean soundOn;
 
     private TextView tvRollNo;
     private Chronometer cmTimer;
@@ -45,6 +51,18 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if (settings.getString("settings_handedness", "Right-handed").equals("Left-handed")) {
+            LinearLayout otherLayout = (LinearLayout) findViewById(R.id.otherLayout);
+            List<View> childViews = new ArrayList<>(4);
+            for (int i = 0; i < 4; i++) {
+                childViews.add(otherLayout.getChildAt(i));
+            }
+            otherLayout.removeAllViews();
+            for (int i = 3; i >= 0; i--) {
+                otherLayout.addView(childViews.get(i));
+            }
+        }
+
         if (settings.getBoolean("settings_shake_roll", false)) {
             sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -56,6 +74,8 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         }
+
+        soundOn = settings.getBoolean("settings_sound", true);
 
         dice = new Dice(Integer.parseInt(settings.getString("settings_dice_count", "5")));
         int[] diceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
@@ -106,6 +126,8 @@ public class GameActivity extends AppCompatActivity {
         cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
         sensorManager.unregisterListener(shakeDetector);
+        diceRollSoundPlayer.release();
+        diceRollSoundPlayer = null;
         super.onPause();
     }
 
@@ -114,6 +136,7 @@ public class GameActivity extends AppCompatActivity {
         cmTimer.setBase(SystemClock.elapsedRealtime() - cmTimerElapsed);
         cmTimer.start();
         sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        diceRollSoundPlayer = MediaPlayer.create(this, R.raw.sound_dice_roll);
         super.onResume();
     }
 
@@ -199,6 +222,18 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    public void diceRolling() {
+        if (soundOn && diceRollSoundPlayer != null) diceRollSoundPlayer.start();
+        SystemClock.sleep(500);
+        for (int i = 0; i < dice.getQuantity(); i++) {
+            if (!(boolean) ivDice.get("ivDice" + (i + 1)).getTag()) {
+                int newRandom = dice.getRandom();
+                dice.setDice(i, newRandom);
+                ivDice.get("ivDice" + (i + 1)).setImageResource(getResources().getIdentifier("dice_" + newRandom, "drawable", getPackageName()));
+            }
+        }
+    }
+
     public void rollEvent() {
         if (!grid.isGameFinished()) {
             if (!grid.getInputDone() && dice.getRollNumber() == 3) {
@@ -220,13 +255,8 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     dice.incrementRollNumber();
                     tvRollNo.setText(String.format("%d", dice.getRollNumber()));
-                    for (int i = 0; i < dice.getQuantity(); i++) {
-                        if (!(boolean) ivDice.get("ivDice" + (i + 1)).getTag()) {
-                            int newRandom = dice.getRandom();
-                            dice.setDice(i, newRandom);
-                            ivDice.get("ivDice" + (i + 1)).setImageResource(getResources().getIdentifier("dice_" + newRandom, "drawable", getPackageName()));
-                        }
-                    }
+
+                    diceRolling();
 
                     if (grid.getAnnouncedCellName() == null) grid.updateAvailableCellsNames(dice.getRollNumber());
                 }

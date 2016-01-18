@@ -19,14 +19,16 @@ public class SettingsFragment extends PreferenceFragment {
                     changedPreference.setSummary("Use " + settings.getString(key, "5") + " dice");
                     break;
                 case "settings_handedness":
-                    changedPreference.setSummary(settings.getString(key, "Right"));
+                    changedPreference.setSummary(settings.getString(key, "Right-handed"));
                     break;
                 case "settings_shake_roll":
-                    changedPreference.setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
+                    changedPreference.setSummary(settings.getBoolean(key, false) ? "Enabled" : "Disabled");
                     break;
                 case "settings_shake_sensitivity":
                     changedPreference.setSummary(settings.getString(key, "Medium"));
                     break;
+                case "settings_sound":
+                    changedPreference.setSummary(settings.getBoolean(key, true) ? "On" : "Off");
                 default:
                     break;
             }
@@ -46,11 +48,13 @@ public class SettingsFragment extends PreferenceFragment {
         key = "settings_dice_count";
         findPreference(key).setSummary("Use " + settings.getString(key, "5") + " dice");
         key = "settings_handedness";
-        findPreference(key).setSummary(settings.getString(key, "Right"));
+        findPreference(key).setSummary(settings.getString(key, "Right-handed"));
         key = "settings_shake_roll";
-        findPreference(key).setSummary(settings.getBoolean(key, false) ? "Enable" : "Disable");
+        findPreference(key).setSummary(settings.getBoolean(key, false) ? "Enabled" : "Disabled");
         key = "settings_shake_sensitivity";
         findPreference(key).setSummary(settings.getString(key, "Medium"));
+        key = "settings_sound";
+        findPreference(key).setSummary(settings.getBoolean(key, true) ? "On" : "Off");
     }
 
     @Override
