@@ -1,5 +1,6 @@
 package com.plazonic.tomislav.yambfriends;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,11 +20,11 @@ import com.google.android.gms.common.api.Status;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-    private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleApiClient googleApiClient;
     private TextView tvProfileInfoSignIn;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,20 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             GoogleSignInResult googleSignInResult = optionalPendingResult.get();
             handleGoogleSignInResult(googleSignInResult);
         } else {
-            updateUI(false, null);
+            showProgressDialog();
+            optionalPendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                    handleGoogleSignInResult(googleSignInResult);
+                }
+            });
         }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: " + connectionResult);
+        Log.d("SignInActivity", "onConnectionFailed: " + connectionResult);
     }
 
     @Override
@@ -72,8 +80,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             case R.id.google_disconnect_button:
                 googleRevokeAccess();
                 break;
-            /*case R.id.facebook_sign_in_button:
-                break;*/
             default:
                 break;
         }
@@ -121,6 +127,22 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             updateUI(true, googleSignInAccount);
         } else {
             updateUI(false, null);
+        }
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.hide();
         }
     }
 

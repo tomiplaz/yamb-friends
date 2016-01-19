@@ -17,13 +17,14 @@ public class ShakeDetector implements SensorEventListener {
     ShakeDetector(String forceThresholdName) {
         switch (forceThresholdName) {
             case "Low":
-                this.forceThreshold = 2.75F;
-                break;
-            case "Medium":
-                this.forceThreshold = 2.0F;
+                this.forceThreshold = 1.9F;
                 break;
             case "High":
-                this.forceThreshold = 1.25F;
+                this.forceThreshold = 1.1F;
+                break;
+            default:
+                this.forceThreshold = 1.5F;
+                break;
         }
     }
 

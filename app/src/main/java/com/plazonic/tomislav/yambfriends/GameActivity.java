@@ -125,8 +125,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
-        sensorManager.unregisterListener(shakeDetector);
-        diceRollSoundPlayer.release();
+        if (sensorManager != null) sensorManager.unregisterListener(shakeDetector);
+        if (diceRollSoundPlayer != null) diceRollSoundPlayer.release();
         diceRollSoundPlayer = null;
         super.onPause();
     }
@@ -135,8 +135,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         cmTimer.setBase(SystemClock.elapsedRealtime() - cmTimerElapsed);
         cmTimer.start();
-        sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
-        diceRollSoundPlayer = MediaPlayer.create(this, R.raw.sound_dice_roll);
+        if (sensorManager != null) sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        if (diceRollSoundPlayer == null) diceRollSoundPlayer = MediaPlayer.create(this, R.raw.sound_dice_roll);
         super.onResume();
     }
 
@@ -224,7 +224,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void diceRolling() {
         if (soundOn && diceRollSoundPlayer != null) diceRollSoundPlayer.start();
-        SystemClock.sleep(500);
         for (int i = 0; i < dice.getQuantity(); i++) {
             if (!(boolean) ivDice.get("ivDice" + (i + 1)).getTag()) {
                 int newRandom = dice.getRandom();

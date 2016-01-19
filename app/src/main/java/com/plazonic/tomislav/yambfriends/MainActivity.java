@@ -1,5 +1,6 @@
 package com.plazonic.tomislav.yambfriends;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +16,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
     private TextView tvProfileInfoMain;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +46,47 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (optionalPendingResult.isDone()) {
             GoogleSignInResult googleSignInResult = optionalPendingResult.get();
-            if (googleSignInResult.isSuccess()) {
-                GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-                tvProfileInfoMain.setText("Signed in as:\n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
-            } else {
-                tvProfileInfoMain.setText(R.string.not_signed_in);
-            }
+            handleGoogleSignInResult(googleSignInResult);
         } else {
-            tvProfileInfoMain.setText(R.string.not_signed_in);
+            showProgressDialog();
+            optionalPendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                    handleGoogleSignInResult(googleSignInResult);
+                }
+            });
         }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Toast.makeText(getApplicationContext(), R.string.connection_failed, Toast.LENGTH_LONG).show();
+    }
+
+    private void handleGoogleSignInResult(GoogleSignInResult googleSignInResult) {
+        if (googleSignInResult.isSuccess()) {
+            GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
+            tvProfileInfoMain.setText("Signed in as:\n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
+        } else {
+            tvProfileInfoMain.setText(R.string.not_signed_in);
+        }
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.hide();
+        }
     }
 
     public void startGame(View v) {
