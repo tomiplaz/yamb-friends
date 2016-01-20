@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/settings_button">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/settings_button" >
         <CheckBoxPreference
             android:key="settings_an0_column"
             android:title="@string/settings_an0_column_title"
             android:defaultValue="false"
-            android:persistent="true"/>
+            android:persistent="true" />
         <ListPreference
             android:key="settings_dice_count"
             android:title="@string/settings_dice_count_title"
@@ -15,7 +13,7 @@
             android:defaultValue="@string/settings_dice_count_default"
             android:entries="@array/settings_dice_count_entries"
             android:entryValues="@array/settings_dice_count_entries"
-            android:persistent="true"/>
+            android:persistent="true" />
         <ListPreference
             android:key="settings_handedness"
             android:title="@string/settings_handedness_title"
@@ -23,12 +21,12 @@
             android:defaultValue="@string/settings_handedness_default"
             android:entries="@array/settings_handedness_entries"
             android:entryValues="@array/settings_handedness_entries"
-            android:persistent="true"/>
+            android:persistent="true" />
         <CheckBoxPreference
             android:key="settings_shake_roll"
             android:title="@string/settings_shake_roll_title"
             android:defaultValue="false"
-            android:persistent="true"/>
+            android:persistent="true" />
         <ListPreference
             android:key="settings_shake_sensitivity"
             android:dependency="settings_shake_roll"
@@ -37,11 +35,11 @@
             android:defaultValue="@string/settings_shake_sensitivity_default"
             android:entries="@array/settings_shake_sensitivity_entries"
             android:entryValues="@array/settings_shake_sensitivity_entries"
-            android:persistent="true"/>
+            android:persistent="true" />
         <CheckBoxPreference
             android:key="settings_sound"
             android:title="@string/settings_sound_title"
             android:defaultValue="true"
-            android:persistent="true"/>
+            android:persistent="true" />
     </PreferenceCategory>
 </PreferenceScreen>

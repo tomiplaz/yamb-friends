@@ -9,13 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.plazonic.tomislav.yambfriends.SignInActivity"
-    android:gravity="center">
+    android:gravity="center" >
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:id="@+id/google_sign_out_disconnect"
@@ -23,21 +23,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/google_sign_in_button"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true" >
 
         <Button
             android:id="@+id/google_sign_out_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_out_button"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
         <Button
             android:id="@+id/google_disconnect_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disconnect_button"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -48,6 +48,6 @@
         android:layout_below="@id/google_sign_out_disconnect"
         android:text="@string/not_signed_in"
         android:layout_centerInParent="true"
-        android:gravity="center"/>
+        android:gravity="center" />
 
 </RelativeLayout>

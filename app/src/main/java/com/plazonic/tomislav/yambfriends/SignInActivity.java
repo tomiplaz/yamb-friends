@@ -20,7 +20,7 @@ import com.google.android.gms.common.api.Status;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-    private static final int RC_SIGN_IN = 9001;
+    private static final int RC_SIGN_IN = 7;
 
     private GoogleApiClient googleApiClient;
     private TextView tvProfileInfoSignIn;

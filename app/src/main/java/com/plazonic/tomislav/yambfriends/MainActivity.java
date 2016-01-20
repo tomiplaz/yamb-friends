@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void goToSignIn(View v) {
         startActivity(new Intent().setClass(getBaseContext(), SignInActivity.class));
     }
+
+    public void goToProfile(View v) {
+        startActivity(new Intent().setClass(getBaseContext(), ProfileActivity.class));
+    }
+
 }
 
 /*
@@ -110,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
  * selected dice: new drawable or something else?
  * cell onclick: select cell; new cell onclick: do input
  * other uses-feature
+ * remove progressDialog?
+ * implement pickAPicture
  *
  *
  * http://developer.android.com/training/basics/activity-lifecycle/index.html

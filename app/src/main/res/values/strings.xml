@@ -1,20 +1,11 @@
 <resources>
+
     <string name="app_name">Yamb Friends</string>
 
     <string name="play_button">Play</string>
     <string name="settings_button">Settings</string>
     <string name="sign_in_button">Sign In</string>
-
-    <string name="end_game_dialog_title">End this game?</string>
-    <string name="end_game_dialog_message">If you end this game, its progress will be lost and you won\'t be able to continue it.</string>
-    <string name="end_game_dialog_positive_button">Yes, end it.</string>
-    <string name="end_game_dialog_negative_button">No, don\'t end it.</string>
-
-    <string name="not_signed_in">You are not signed in!</string>
-    <string name="sign_out_button">Sign Out</string>
-    <string name="disconnect_button">Disconnect</string>
-    <string name="connection_failed">Error connecting Google API client to the service.</string>
-    <string name="loading">Loading...</string>
+    <string name="profile_button">Profile</string>
 
     <string name="_x_x">Thanks for playing!</string>
     <string name="_1_x">Sum of 1s.</string>
@@ -48,6 +39,11 @@
     <string name="description_dice5">Fifth dice.</string>
     <string name="description_dice6">Sixth dice.</string>
 
+    <string name="end_game_dialog_title">End this game?</string>
+    <string name="end_game_dialog_message">If you end this game, its progress will be lost and you won\'t be able to continue it.</string>
+    <string name="end_game_dialog_positive_button">Yes, end it.</string>
+    <string name="end_game_dialog_negative_button">No, don\'t end it.</string>
+
     <string name="settings_an0_column_title">Pre-roll Announcement Column</string>
     <string name="settings_dice_count_title">Number of Dice</string>
     <string name="settings_dice_count_default">5</string>
@@ -57,4 +53,14 @@
     <string name="settings_shake_sensitivity_title">Shake Sensitivity</string>
     <string name="settings_shake_sensitivity_default">Medium</string>
     <string name="settings_sound_title">Sound</string>
+
+    <string name="not_signed_in">You are not signed in!</string>
+    <string name="sign_out_button">Sign Out</string>
+    <string name="disconnect_button">Disconnect</string>
+    <string name="connection_failed">Error connecting Google API client to the service.</string>
+    <string name="loading">Loading&#8230;</string>
+
+    <string name="take_a_picture_button">Take a picture</string>
+    <string name="pick_a_picture_button">Pick a picture</string>
+
 </resources>
