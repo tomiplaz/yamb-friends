@@ -14,38 +14,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int RC_CAPTURE_AN_IMAGE = 13;
     private static final int RC_CHOOSE_AN_IMAGE = 27;
     private static final int MEDIA_TYPE_IMAGE = 72;
-    private File imageFile;
-
-    private Uri getOutputMediaFileUri(int type){
-        return Uri.fromFile(getOutputMediaFile(type));
-    }
-
-    private File getOutputMediaFile(int type){
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File storageDirectory =  new File(Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Yamb Friends");
-
-            if (!storageDirectory.exists()){
-                Log.d("ProfileActivity", "storageDirectory doesn't exist");
-                if (! storageDirectory.mkdirs()){
-                    Log.d("ProfileActivity", "failed creating storageDirectory");
-                    return null;
-                }
-            }
-
-            if (type == MEDIA_TYPE_IMAGE){
-                //String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                imageFile = new File(storageDirectory.getPath() + File.separator + "yolo.jpg"); // Use user's name for file name
-                return imageFile;
-            } else return null;
-        } else return null;
-    }
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +40,53 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (requestCode == RC_CHOOSE_AN_IMAGE) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(getApplicationContext(), "Chosen successfully.", Toast.LENGTH_SHORT).show();
-                imageFile = new File(data.getData().toString());
+                fileUri = data.getData();
             } else {
                 Toast.makeText(getApplicationContext(), "Image selection failed.", Toast.LENGTH_SHORT).show();
             }
         }
 
         if (resultCode == RESULT_OK) {
-            if (imageFile.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                ImageView ivProfileImage = (ImageView) findViewById(R.id.profile_image);
-                ivProfileImage.setImageBitmap(bitmap);
-            } else {
-                Toast.makeText(getApplicationContext(), "Could not find image file.", Toast.LENGTH_SHORT).show();
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                if (inputStream.available() != 0) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    ImageView ivProfileImage = (ImageView) findViewById(R.id.profile_image);
+                    ivProfileImage.setImageBitmap(bitmap);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Could not read image file.", Toast.LENGTH_SHORT).show();
+                }
+                inputStream.close();
+            } catch(Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
+    private Uri getFileUri(int type){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File storageDirectory =  new File(Environment
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Yamb Friends");
+
+            if (!storageDirectory.exists()){
+                Log.d("ProfileActivity", "storageDirectory doesn't exist");
+                if (! storageDirectory.mkdirs()){
+                    Log.d("ProfileActivity", "failed creating storageDirectory");
+                    return null;
+                }
+            }
+
+            if (type == MEDIA_TYPE_IMAGE){
+                // Use user's name for file name
+                File imageFile = new File(storageDirectory.getPath() + File.separator + "yolo.jpg");
+                return Uri.fromFile(imageFile);
+            } else return null;
+        } else return null;
+    }
+
     public void captureAnImage(View v) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        fileUri = getFileUri(MEDIA_TYPE_IMAGE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 
         startActivityForResult(intent, RC_CAPTURE_AN_IMAGE);
