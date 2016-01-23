@@ -12,19 +12,30 @@
     android:gravity="center" >
 
     <Button
-        android:id="@+id/take_a_picture_button"
+        android:id="@+id/capture_an_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/take_a_picture_button"
-        android:onClick="takeAPicture"
+        android:text="@string/capture_an_image_button"
+        android:onClick="captureAnImage"
         android:layout_centerInParent="true" />
 
     <Button
-        android:id="@+id/pick_a_picture_button"
+        android:id="@+id/choose_an_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pick_a_picture_button"
-        android:onClick="pickAPicture"
+        android:layout_below="@id/capture_an_image_button"
+        android:text="@string/choose_an_image_button"
+        android:onClick="chooseAnImage"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="@dimen/profile_image_preview_size"
+        android:maxWidth="@dimen/profile_image_preview_size"
+        android:scaleType="centerInside"
+        android:layout_below="@id/choose_an_image_button"
         android:layout_centerInParent="true" />
 
 </RelativeLayout>

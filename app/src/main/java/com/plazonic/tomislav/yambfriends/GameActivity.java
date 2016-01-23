@@ -179,7 +179,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void gridCellClickEvent(int position) {
+    private void gridCellClickEvent(int position) {
         String clickedCellName = grid.positionToCellName(position);
         int nCol = grid.getNumOfCols(false);
         if (position / nCol == 0 || position % nCol == 0) {
@@ -222,7 +222,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void diceRolling() {
+    private void diceRolling() {
         if (soundOn && diceRollSoundPlayer != null) diceRollSoundPlayer.start();
         for (int i = 0; i < dice.getQuantity(); i++) {
             if (!(boolean) ivDice.get("ivDice" + (i + 1)).getTag()) {
@@ -233,7 +233,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void rollEvent() {
+    private void rollEvent() {
         if (!grid.isGameFinished()) {
             if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                 Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
@@ -265,7 +265,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void undoEvent() {
+    private void undoEvent() {
         if (!grid.isGameFinished()) {
             if (grid.getInputDone()) {
                 dice.setRollNumber(dice.getLastRollNumber());

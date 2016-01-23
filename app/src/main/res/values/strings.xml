@@ -60,7 +60,7 @@
     <string name="connection_failed">Error connecting Google API client to the service.</string>
     <string name="loading">Loading&#8230;</string>
 
-    <string name="take_a_picture_button">Take a picture</string>
-    <string name="pick_a_picture_button">Pick a picture</string>
+    <string name="capture_an_image_button">Capture an image</string>
+    <string name="choose_an_image_button">Choose an image</string>
 
 </resources>

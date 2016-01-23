@@ -50,7 +50,7 @@
         android:id="@+id/profile_info_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sign_in_button"
+        android:layout_below="@id/profile_button"
         android:text="@string/not_signed_in"
         android:layout_centerInParent="true"
         android:gravity="center" />

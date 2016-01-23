@@ -114,10 +114,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
  * group other views under another group layout
  * selected dice: new drawable or something else?
  * cell onclick: select cell; new cell onclick: do input
- * other uses-feature
- * remove progressDialog?
- * implement pickAPicture
- *
+ * other uses-feature *
  *
  * http://developer.android.com/training/basics/activity-lifecycle/index.html
  * http://developer.android.com/guide/components/processes-and-threads.html
