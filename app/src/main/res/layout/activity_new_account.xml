@@ -18,7 +18,7 @@
         android:text="@string/new_account_title"/>
 
     <EditText
-        android:id="@+id/new_account_name"
+        android:id="@+id/new_account_username"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/new_account_title"
@@ -26,13 +26,13 @@
         android:inputType="textPersonName"
         android:maxLength="20"
         android:imeOptions="actionNext"
-        android:hint="@string/new_account_name_hint"/>
+        android:hint="@string/new_account_username_hint"/>
 
     <EditText
         android:id="@+id/new_account_password"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/new_account_name"
+        android:layout_below="@+id/new_account_username"
         android:layout_centerInParent="true"
         android:inputType="textVisiblePassword"
         android:imeOptions="actionDone"

@@ -65,7 +65,7 @@
     <string name="choose_an_image_button">Choose an image</string>
 
     <string name="new_account_title">New account:</string>
-    <string name="new_account_name_hint">Name</string>
+    <string name="new_account_username_hint">Name</string>
     <string name="new_account_password_hint">Password</string>
     <string name="new_account_create_button">Create new account</string>
 
