@@ -50,4 +50,13 @@
         android:layout_centerInParent="true"
         android:gravity="center" />
 
+    <Button
+        android:id="@+id/new_account_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_info_sign_in"
+        android:text="@string/new_account_button"
+        android:layout_centerInParent="true"
+        android:onClick="goToNewAccount" />
+
 </RelativeLayout>

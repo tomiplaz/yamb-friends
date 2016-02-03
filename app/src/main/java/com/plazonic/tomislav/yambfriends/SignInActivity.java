@@ -148,14 +148,20 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     private void updateUI(boolean signedIn, GoogleSignInAccount googleSignInAccount) {
         if (signedIn) {
+            findViewById(R.id.new_account_button).setVisibility(View.GONE);
             findViewById(R.id.google_sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.google_sign_out_disconnect).setVisibility(View.VISIBLE);
             tvProfileInfoSignIn.setText("Signed in as:\n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
         } else {
-            findViewById(R.id.google_sign_out_disconnect).setVisibility(View.GONE);
+            findViewById(R.id.new_account_button).setVisibility(View.VISIBLE);
             findViewById(R.id.google_sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.google_sign_out_disconnect).setVisibility(View.GONE);
             tvProfileInfoSignIn.setText(R.string.not_signed_in);
         }
+    }
+
+    public void goToNewAccount(View v) {
+        startActivity(new Intent().setClass(getBaseContext(), NewAccountActivity.class));
     }
 
 }

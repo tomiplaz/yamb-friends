@@ -57,10 +57,16 @@
     <string name="not_signed_in">You are not signed in!</string>
     <string name="sign_out_button">Sign Out</string>
     <string name="disconnect_button">Disconnect</string>
+    <string name="new_account_button">New Account</string>
     <string name="connection_failed">Error connecting Google API client to the service.</string>
     <string name="loading">Loading&#8230;</string>
 
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
+
+    <string name="new_account_title">New account:</string>
+    <string name="new_account_name_hint">Name</string>
+    <string name="new_account_password_hint">Password</string>
+    <string name="new_account_create_button">Create new account</string>
 
 </resources>
