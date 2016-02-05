@@ -28,11 +28,18 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".SignInActivity"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".NewAccountActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".NewAccountDialogActivity"
+            android:excludeFromRecents="false"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".SignInDialogActivity"
+            android:excludeFromRecents="false"
+            android:theme="@style/Theme.AppCompat.Dialog" />
     </application>
 
 </manifest>

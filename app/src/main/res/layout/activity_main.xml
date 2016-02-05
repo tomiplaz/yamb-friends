@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/play_button"
-        android:onClick="startGame"
         android:layout_centerInParent="true" />
 
     <Button
@@ -25,7 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_below="@id/play_button"
         android:text="@string/settings_button"
-        android:onClick="goToSettings"
         android:layout_centerInParent="true" />
 
     <Button
@@ -34,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_below="@id/settings_button"
         android:text="@string/sign_in_button"
-        android:onClick="goToSignIn"
         android:layout_centerInParent="true" />
 
     <Button
@@ -43,7 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_below="@id/sign_in_button"
         android:text="@string/profile_button"
-        android:onClick="goToProfile"
         android:layout_centerInParent="true" />
 
     <TextView

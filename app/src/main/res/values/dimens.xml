@@ -7,4 +7,9 @@
     <dimen name="dice_size">40dp</dimen>
 
     <dimen name="profile_image_preview_size">100dp</dimen>
+
+    <dimen name="line_separator_margin">10dp</dimen>
+
+    <dimen name="edit_text_height">60dp</dimen>
+    <dimen name="edit_text_button_margin">20dp</dimen>
 </resources>

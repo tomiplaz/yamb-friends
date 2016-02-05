@@ -1,167 +1,77 @@
 package com.plazonic.tomislav.yambfriends;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+    public static final int RC_GOOGLE_SIGN_IN = 7;
 
-    private static final int RC_SIGN_IN = 7;
-
-    private GoogleApiClient googleApiClient;
+    private SharedPreferences settings;
     private TextView tvProfileInfoSignIn;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        findViewById(R.id.sign_out_button).setOnClickListener(this);
+        findViewById(R.id.sign_in_dialog_button).setOnClickListener(this);
+        findViewById(R.id.new_account_dialog_button).setOnClickListener(this);
+
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
         tvProfileInfoSignIn = (TextView) findViewById(R.id.profile_info_sign_in);
-
-        findViewById(R.id.google_sign_in_button).setOnClickListener(this);
-        findViewById(R.id.google_sign_out_button).setOnClickListener(this);
-        findViewById(R.id.google_disconnect_button).setOnClickListener(this);
-
-        GoogleSignInOptions googleSignInOptions =
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
-        googleApiClient =
-                new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if (optionalPendingResult.isDone()) {
-            GoogleSignInResult googleSignInResult = optionalPendingResult.get();
-            handleGoogleSignInResult(googleSignInResult);
-        } else {
-            showProgressDialog();
-            optionalPendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgressDialog();
-                    handleGoogleSignInResult(googleSignInResult);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("SignInActivity", "onConnectionFailed: " + connectionResult);
+    protected void onResume() {
+        super.onResume();
+        updateUI(settings.getString("username", null) != null);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.google_sign_in_button:
-                googleSignIn();
+            case R.id.new_account_dialog_button:
+                startNewAccountActivityDialog();
                 break;
-            case R.id.google_sign_out_button:
-                googleSignOut();
+            case R.id.sign_in_dialog_button:
+                startSignInActivityDialog();
                 break;
-            case R.id.google_disconnect_button:
-                googleRevokeAccess();
-                break;
-            default:
+            case R.id.sign_out_button:
+                signOut();
                 break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleGoogleSignInResult(googleSignInResult);
-        }
-    }
-
-    private void googleSignIn() {
-        Intent googleSignInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(googleSignInIntent, RC_SIGN_IN);
-    }
-
-    private void googleSignOut() {
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        updateUI(false, null);
-                    }
-                }
-        );
-    }
-
-    private void googleRevokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        updateUI(false, null);
-                    }
-                }
-        );
-    }
-
-    private void handleGoogleSignInResult(GoogleSignInResult googleSignInResult) {
-        if (googleSignInResult.isSuccess()) {
-            GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-            updateUI(true, googleSignInAccount);
-        } else {
-            updateUI(false, null);
-        }
-    }
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.hide();
-        }
-    }
-
-    private void updateUI(boolean signedIn, GoogleSignInAccount googleSignInAccount) {
+    private void updateUI(boolean signedIn) {
         if (signedIn) {
-            findViewById(R.id.new_account_button).setVisibility(View.GONE);
-            findViewById(R.id.google_sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.google_sign_out_disconnect).setVisibility(View.VISIBLE);
-            tvProfileInfoSignIn.setText("Signed in as:\n" + googleSignInAccount.getDisplayName() + "\n" + googleSignInAccount.getId());
+            tvProfileInfoSignIn.setText("Signed in as:\n" + settings.getString("username", null));
+            findViewById(R.id.sign_in_dialog_button).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.new_account_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.google_sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.google_sign_out_disconnect).setVisibility(View.GONE);
             tvProfileInfoSignIn.setText(R.string.not_signed_in);
+            findViewById(R.id.sign_in_dialog_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_button).setVisibility(View.GONE);
         }
     }
 
-    public void goToNewAccount(View v) {
-        startActivity(new Intent().setClass(getBaseContext(), NewAccountActivity.class));
+    private void signOut() {
+        settings.edit().putString("username", null).apply();
+        updateUI(false);
+    }
+
+    private void startSignInActivityDialog() {
+        startActivity(new Intent().setClass(getBaseContext(), SignInDialogActivity.class));
+    }
+
+    private void startNewAccountActivityDialog() {
+        startActivity(new Intent().setClass(getBaseContext(), NewAccountDialogActivity.class));
     }
 
 }

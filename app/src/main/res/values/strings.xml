@@ -4,7 +4,7 @@
 
     <string name="play_button">Play</string>
     <string name="settings_button">Settings</string>
-    <string name="sign_in_button">Sign In</string>
+    <string name="sign_in_button">Sign in</string>
     <string name="profile_button">Profile</string>
 
     <string name="_x_x">Thanks for playing!</string>
@@ -55,18 +55,27 @@
     <string name="settings_sound_title">Sound</string>
 
     <string name="not_signed_in">You are not signed in!</string>
-    <string name="sign_out_button">Sign Out</string>
-    <string name="disconnect_button">Disconnect</string>
-    <string name="new_account_button">New Account</string>
-    <string name="connection_failed">Error connecting Google API client to the service.</string>
-    <string name="loading">Loading&#8230;</string>
+    <string name="new_account_dialog_button">New account</string>
+    <string name="sign_out_button">Sign out</string>
+    <string name="google_api_client_connection_fail">Failed connecting to Google API Client.</string>
+    <string name="google_sign_in_fail">Failed signing in to Google.</string>
+    <string name="unsuccessful_http_response">Unsuccessful HTTP response.</string>
+
+    <string name="create_new_account_via_google">Create new account using Google Sign In</string>
+    <string name="create_new_account_regularly">Create new account regularly</string>
+    <string name="create_new_account_button">Create new account</string>
+    <string name="sign_in_via_google">Sign in using Google Sign In</string>
+    <string name="sign_in_regularly">Sign in regularly</string>
+    <string name="sign_in_confirm_button">Confirm sign in</string>
+    <string name="username_hint">Name</string>
+    <string name="password_hint">Password</string>
 
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
-
-    <string name="new_account_title">New account:</string>
-    <string name="new_account_username_hint">Name</string>
-    <string name="new_account_password_hint">Password</string>
-    <string name="new_account_create_button">Create new account</string>
+    <string name="saved_successfully">Saved successfully.</string>
+    <string name="image_capture_failed">Image capture failed.</string>
+    <string name="chosen_successfully">Chosen successfully.</string>
+    <string name="image_selection_failed">Image selection failed.</string>
+    <string name="could_not_read_image_file">Could not read image file.</string>
 
 </resources>
