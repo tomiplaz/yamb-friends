@@ -58,6 +58,7 @@
     <string name="new_account_dialog_button">New account</string>
     <string name="sign_out_button">Sign out</string>
     <string name="google_api_client_connection_fail">Failed connecting to Google API Client.</string>
+    <string name="google_api_client_connection_interrupted">Connection to Google API Client has been interrupted.</string>
     <string name="google_sign_in_fail">Failed signing in to Google.</string>
     <string name="unsuccessful_http_response">Unsuccessful HTTP response.</string>
 

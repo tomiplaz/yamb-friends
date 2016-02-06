@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -23,12 +23,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -44,6 +50,10 @@ public class GameActivity extends AppCompatActivity {
     private Map<String, ImageView> ivDice;
     private Grid grid;
     private ArrayAdapter<String> gvAdapter;
+
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation;
+    private double lastLatitude, lastLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,21 +114,25 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Button btnRoll = (Button) findViewById(R.id.rollBtn);
-        btnRoll.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rollBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rollEvent();
             }
         });
 
-        Button btnUndo = (Button) findViewById(R.id.undoBtn);
-        btnUndo.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.undoBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 undoEvent();
             }
         });
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     @Override
@@ -144,7 +158,43 @@ public class GameActivity extends AppCompatActivity {
     protected void onDestroy() {
         cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
+        googleApiClient.disconnect();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(getApplicationContext(), R.string.google_api_client_connection_fail, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        LocationRequest locationRequest = LocationRequest.create();
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lastLatitude = location.getLatitude();
+                lastLongitude = location.getLongitude();
+            }
+        });
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Toast.makeText(getApplicationContext(), R.string.google_api_client_connection_interrupted, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -216,8 +266,20 @@ public class GameActivity extends AppCompatActivity {
             }
 
             if (grid.isGameFinished()) {
+                // Disable all UI components
+
+                if (googleApiClient.isConnected()) {
+                    lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    if (lastLocation != null) {
+                        lastLatitude = lastLocation.getLatitude();
+                        lastLongitude = lastLocation.getLongitude();
+                    }
+                }
+
                 grid.calculateFinalResult();
                 Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+
+                // Insert game to database
             }
         }
     }
