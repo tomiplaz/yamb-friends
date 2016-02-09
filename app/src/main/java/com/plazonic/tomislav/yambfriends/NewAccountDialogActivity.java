@@ -18,6 +18,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import retrofit.Callback;
@@ -96,7 +97,6 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
     private void createNewAccountRegularly() {
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
-
         createNewAccount();
     }
 
@@ -110,10 +110,12 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
             @Override
             public void success(Response response, Response response2) {
                 try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+                    InputStream inputStream = response.getBody().in();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String responseString = bufferedReader.readLine();
 
-                    if (responseString.equals("Account created!")) {
+                    if (responseString.equals("Account created.")) {
                         settings.edit().putString("username", username).apply();
                     }
                     Toast.makeText(getApplicationContext(),responseString, Toast.LENGTH_SHORT).show();

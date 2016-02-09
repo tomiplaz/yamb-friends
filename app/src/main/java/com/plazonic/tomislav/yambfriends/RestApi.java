@@ -4,9 +4,12 @@ import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Query;
 
 public interface RestApi {
+
     String END_POINT = "http://ugodnomjesto.net84.net/yambfriends";
 
     @FormUrlEncoded
@@ -24,4 +27,19 @@ public interface RestApi {
             @Field("password") String password,
             Callback<Response> callback
     );
+
+    @FormUrlEncoded
+    @POST("/uploadImage.php")
+    void uploadImage(
+            @Field("username") String username,
+            @Field("image") String image,
+            Callback<Response> callback
+    );
+
+    @GET("/getUserId.php")
+    void getUserId(
+            @Query("username") String username,
+            Callback<Response> callback
+    );
+
 }
