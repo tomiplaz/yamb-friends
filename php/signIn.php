@@ -5,8 +5,6 @@
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
-	// Check validity of values on frontend
-
 	$user = mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"));
 
 	if (!$user) {

@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Tomo on 10/31/2015.
- */
 public class Grid {
 
     // use JavaDoc extensively
@@ -292,10 +289,6 @@ public class Grid {
         return this.gameModel.get(cellName);
     }
 
-    public void setFinalResult(int finalResult) {
-        this.finalResult = finalResult;
-    }
-
     public int getFinalResult() {
         return this.finalResult;
     }
@@ -310,6 +303,19 @@ public class Grid {
         }
 
         this.finalResult = finalResult;
+    }
+
+    public String getGameString() {
+        String gameString = "";
+
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < this.numOfCols; j++) {
+                gameString += this.gameModel.get(this.ROW_NAMES.get(i) + "_" + this.COL_NAMES.get(j));
+                gameString += ";";
+            }
+        }
+
+        return gameString;
     }
 
 }

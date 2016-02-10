@@ -34,7 +34,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private SharedPreferences settings;
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -52,14 +59,13 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private ArrayAdapter<String> gvAdapter;
 
     private GoogleApiClient googleApiClient;
-    private Location lastLocation;
     private double lastLatitude = 0, lastLongitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (settings.getString("settings_handedness", "Right-handed").equals("Left-handed")) {
             LinearLayout otherLayout = (LinearLayout) findViewById(R.id.otherLayout);
@@ -137,8 +143,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onPause() {
-        cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         cmTimer.stop();
+        cmTimerElapsed = SystemClock.elapsedRealtime() - cmTimer.getBase();
         if (sensorManager != null) sensorManager.unregisterListener(shakeDetector);
         if (diceRollSoundPlayer != null) diceRollSoundPlayer.release();
         diceRollSoundPlayer = null;
@@ -269,7 +275,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 // Disable all UI components
 
                 if (googleApiClient.isConnected()) {
-                    lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                     if (lastLocation != null) {
                         lastLatitude = lastLocation.getLatitude();
                         lastLongitude = lastLocation.getLongitude();
@@ -277,9 +283,9 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
 
                 grid.calculateFinalResult();
-                Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+                cmTimer.stop();
 
-                // Insert game to database
+                insertGame();
             }
         }
     }
@@ -351,6 +357,42 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 grid.updateAvailableCellsNames(dice.getRollNumber());
             }
         }
+    }
+
+    private String getGameType(int diceQuantity, int numberOfColumns) {
+        String gameType = "";
+
+        gameType += (numberOfColumns == 4 ? "an1" : "an0");
+        gameType += "d" + diceQuantity;
+
+        return gameType;
+    }
+
+    private void insertGame() {
+        String username = settings.getString("username", null);
+        String type = getGameType(dice.getQuantity(), grid.getNumOfCols(true));
+        String game = grid.getGameString();
+        int result = grid.getFinalResult();
+        int duration = (int) ((SystemClock.elapsedRealtime() - cmTimer.getBase()) / 1000);
+        float latitude = (float) lastLatitude;
+        float longitude = (float) lastLongitude;
+        RestApi restApi = new RestAdapter.Builder()
+                .setEndpoint(RestApi.END_POINT)
+                .build()
+                .create(RestApi.class);
+
+        restApi.insertGame(username, type, game, result, duration, latitude, longitude, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

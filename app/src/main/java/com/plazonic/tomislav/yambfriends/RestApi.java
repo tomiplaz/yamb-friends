@@ -42,4 +42,17 @@ public interface RestApi {
             Callback<Response> callback
     );
 
+    @FormUrlEncoded
+    @POST("/insertGame.php")
+    void insertGame(
+            @Field("username") String username,
+            @Field("type") String type,
+            @Field("game") String game,
+            @Field("result") int result,
+            @Field("duration") int duration,
+            @Field("latitude") float latitude,
+            @Field("longitude") float longitude,
+            Callback<Response> callback
+    );
+
 }

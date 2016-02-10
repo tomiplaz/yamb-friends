@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Tomo on 11/30/2015.
- */
 public class Dice {
 
     private int quantity;
