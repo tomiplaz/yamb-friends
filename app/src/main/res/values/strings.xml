@@ -7,6 +7,11 @@
     <string name="sign_in_button">Sign in</string>
     <string name="profile_button">Profile</string>
 
+    <string name="an0_info_no">An0: No</string>
+    <string name="an0_info_yes">An0: Yes</string>
+    <string name="dice_info_5">Dice: 5</string>
+    <string name="dice_info_6">Dice: 6</string>
+
     <string name="_x_x">Thanks for playing!</string>
     <string name="_1_x">Sum of 1s.</string>
     <string name="_2_x">Sum of 2s.</string>
