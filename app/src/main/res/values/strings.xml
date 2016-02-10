@@ -46,8 +46,8 @@
 
     <string name="end_game_dialog_title">End this game?</string>
     <string name="end_game_dialog_message">If you end this game, its progress will be lost and you won\'t be able to continue it.</string>
-    <string name="end_game_dialog_positive_button">Yes, end it.</string>
-    <string name="end_game_dialog_negative_button">No, don\'t end it.</string>
+    <string name="end_game_dialog_positive_button">Yes, end it</string>
+    <string name="end_game_dialog_negative_button">No, don\'t end it</string>
 
     <string name="settings_an0_column_title">Pre-roll Announcement Column</string>
     <string name="settings_dice_count_title">Number of Dice</string>
@@ -62,10 +62,10 @@
     <string name="not_signed_in">You are not signed in!</string>
     <string name="new_account_dialog_button">New account</string>
     <string name="sign_out_button">Sign out</string>
-    <string name="google_api_client_connection_fail">Failed connecting to Google API Client.</string>
-    <string name="google_api_client_connection_interrupted">Connection to Google API Client has been interrupted.</string>
-    <string name="google_sign_in_fail">Failed signing in to Google.</string>
-    <string name="unsuccessful_http_response">Unsuccessful HTTP response.</string>
+    <string name="google_api_client_connection_fail">Failed connecting to Google API Client</string>
+    <string name="google_api_client_connection_interrupted">Connection to Google API Client has been interrupted</string>
+    <string name="google_sign_in_fail">Failed signing in to Google</string>
+    <string name="unsuccessful_http_response">Unsuccessful HTTP response</string>
 
     <string name="create_new_account_via_google">Create new account using Google Sign In:</string>
     <string name="create_new_account_regularly">Create new account regularly:</string>
@@ -75,15 +75,17 @@
     <string name="sign_in_confirm_button">Confirm sign in</string>
     <string name="username_hint">Name</string>
     <string name="password_hint">Password</string>
+    <string name="username_too_short">Username must be at least 5 characters long</string>
+    <string name="password_too_short">Password must be at least 5 characters long</string>
 
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
     <string name="current_profile_image">Current profile image:</string>
     <string name="uploading_image">Uploading image&#8230;</string>
-    <string name="image_capture_failed">Image capture failed.</string>
-    <string name="image_selection_failed">Image selection failed.</string>
-    <string name="could_not_read_image_file">Could not read image file.</string>
-    <string name="file_not_found">File not found.</string>
-    <string name="no_profile_image">No profile image.</string>
+    <string name="image_capture_failed">Image capture failed</string>
+    <string name="image_selection_failed">Image selection failed</string>
+    <string name="could_not_read_image_file">Could not read image file</string>
+    <string name="file_not_found">File not found</string>
+    <string name="no_profile_image">No profile image</string>
 
 </resources>

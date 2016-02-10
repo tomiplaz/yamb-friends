@@ -80,6 +80,10 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
                 username = googleSignInAccount.getDisplayName();
                 password = googleSignInAccount.getId();
 
+                if (username == null || username.length() < 5) {
+                    username = password;
+                }
+
                 Auth.GoogleSignInApi.revokeAccess(googleApiClient);
 
                 createNewAccount();
@@ -97,7 +101,14 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
     private void createNewAccountRegularly() {
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
-        createNewAccount();
+
+        if (username.length() < 5) {
+            Toast.makeText(getApplicationContext(), R.string.username_too_short, Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 5) {
+            Toast.makeText(getApplicationContext(), R.string.password_too_short, Toast.LENGTH_SHORT).show();
+        } else {
+            createNewAccount();
+        }
     }
 
     private void createNewAccount() {
@@ -118,7 +129,7 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
                     if (responseString.equals("Account created.")) {
                         settings.edit().putString("username", username).apply();
                     }
-                    Toast.makeText(getApplicationContext(),responseString, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
 
                     finish();
                 } catch(IOException e) {

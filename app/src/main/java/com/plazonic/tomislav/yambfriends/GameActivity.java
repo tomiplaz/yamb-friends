@@ -53,7 +53,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
-    private double lastLatitude, lastLongitude;
+    private double lastLatitude = 0, lastLongitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
