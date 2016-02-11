@@ -4,7 +4,7 @@
 
 	$username = $_GET['username'];
 
-	$user = mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"));
+	$user = mysqli_fetch_array(db_query("SELECT id FROM users WHERE username='$username'"));
 
 	if (!$user) {
 		echo "User not found.";

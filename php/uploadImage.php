@@ -5,7 +5,7 @@
 	$username = $_POST['username'];
 	$image = $_POST['image'];
 
-	$user = mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"));
+	$user = mysqli_fetch_array(db_query("SELECT id FROM users WHERE username='$username'"));
 	$userId = $user['id'];
 	$path = "images/$userId.jpeg";
 

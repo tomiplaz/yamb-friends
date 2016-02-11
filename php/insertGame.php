@@ -42,6 +42,7 @@
 
 		db_query("UPDATE users SET latitude=$latitudeNew, longitude=$longitudeNew, games_played=$gamesPlayedNew,
 			total_time_played=$totalTimePlayedNew, average_game_duration=$averageGameDurationNew,
-			$typePlayedField=$typePlayedNew, $typeBestField=$typeBestNew, $typeAverageField=$typeAverageNew");
+			$typePlayedField=$typePlayedNew, $typeBestField=$typeBestNew, $typeAverageField=$typeAverageNew
+			WHERE username='$username'");
 	}
 ?>

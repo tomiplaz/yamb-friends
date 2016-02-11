@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -41,7 +42,7 @@ import retrofit.client.Response;
 
 public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private SharedPreferences settings;
+    private String username;
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -50,32 +51,37 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private MediaPlayer diceRollSoundPlayer;
     private boolean soundOn;
 
+    private Grid grid;
+    private GridView gvGrid;
+    private ArrayAdapter<String> gvAdapter;
+    private Dice dice;
+    private Map<String, ImageView> ivDice;
     private TextView tvRollNo;
     private Chronometer cmTimer;
     private long cmTimerElapsed;
-    private Dice dice;
-    private Map<String, ImageView> ivDice;
-    private Grid grid;
-    private ArrayAdapter<String> gvAdapter;
+    private Button btnRoll, btnUndo;
 
     private GoogleApiClient googleApiClient;
     private double lastLatitude = 0, lastLongitude = 0;
+
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        username = settings.getString("username", null);
 
         if (settings.getString("settings_handedness", "Right-handed").equals("Left-handed")) {
-            LinearLayout otherLayout = (LinearLayout) findViewById(R.id.otherLayout);
+            LinearLayout llOtherLayout = (LinearLayout) findViewById(R.id.otherLayout);
             List<View> childViews = new ArrayList<>(4);
             for (int i = 0; i < 4; i++) {
-                childViews.add(otherLayout.getChildAt(i));
+                childViews.add(llOtherLayout.getChildAt(i));
             }
-            otherLayout.removeAllViews();
+            llOtherLayout.removeAllViews();
             for (int i = 3; i >= 0; i--) {
-                otherLayout.addView(childViews.get(i));
+                llOtherLayout.addView(childViews.get(i));
             }
         }
 
@@ -108,8 +114,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         cmTimer = (Chronometer) findViewById(R.id.timer);
         cmTimerElapsed = 0;
 
+        btnRoll = (Button) findViewById(R.id.rollBtn);
+        btnUndo = (Button) findViewById(R.id.undoBtn);
+
         grid = new Grid(settings.getBoolean("settings_an0_column", false));
-        GridView gvGrid = (GridView) findViewById(R.id.gridView);
+        gvGrid = (GridView) findViewById(R.id.gridView);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
         gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
         gvGrid.setAdapter(gvAdapter);
@@ -120,14 +129,14 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
-        findViewById(R.id.rollBtn).setOnClickListener(new View.OnClickListener() {
+        btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rollEvent();
             }
         });
 
-        findViewById(R.id.undoBtn).setOnClickListener(new View.OnClickListener() {
+        btnUndo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 undoEvent();
@@ -139,6 +148,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        restApi = new RestAdapter.Builder()
+                .setEndpoint(RestApi.END_POINT)
+                .build()
+                .create(RestApi.class);
     }
 
     @Override
@@ -205,23 +219,27 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setTitle(R.string.end_game_dialog_title)
-                .setMessage(R.string.end_game_dialog_message)
-                .setPositiveButton(R.string.end_game_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.end_game_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+        if (!grid.isGameFinished()) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setTitle(R.string.end_game_dialog_title)
+                    .setMessage(R.string.end_game_dialog_message)
+                    .setPositiveButton(R.string.end_game_dialog_positive_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gameForfeited();
+                        }
+                    })
+                    .setNegativeButton(R.string.end_game_dialog_negative_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+            finish();
+        }
     }
 
     public void diceClick(View v) {
@@ -247,6 +265,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                     grid.getAnnouncedCellName() == null) {
                 grid.setAnnouncedCellName(clickedCellName);
                 grid.updateAvailableCellsNames(dice.getRollNumber());
+                Toast.makeText(getApplicationContext(), "Announced: " + clickedCellName, Toast.LENGTH_SHORT).show();
             } else {
                 int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
                 grid.setModelValue(clickedCellName, result);
@@ -264,6 +283,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             grid.checkCompletedSections();
             if (!grid.getLastSumCellsNames().isEmpty()) {
                 List<String> lastSumCellsNames = grid.getLastSumCellsNames();
+
                 // Update view with lastSumCellsNames.
                 for (int i = 0; i < lastSumCellsNames.size(); i++) {
                     grid.updateListCells(lastSumCellsNames.get(i), Integer.toString(grid.getModelValue(lastSumCellsNames.get(i))));
@@ -272,7 +292,9 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             }
 
             if (grid.isGameFinished()) {
-                // Disable all UI components
+                disableUI();
+                cmTimer.stop();
+                grid.calculateFinalResult();
 
                 if (googleApiClient.isConnected()) {
                     Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
@@ -281,9 +303,6 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                         lastLongitude = lastLocation.getLongitude();
                     }
                 }
-
-                grid.calculateFinalResult();
-                cmTimer.stop();
 
                 insertGame();
             }
@@ -359,6 +378,15 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    private void disableUI() {
+        gvGrid.setClickable(false);
+        for (int i = 0; i < dice.getQuantity(); i++) {
+            ivDice.get("ivDice" + (i + 1)).setClickable(false);
+        }
+        btnRoll.setClickable(false);
+        btnUndo.setClickable(false);
+    }
+
     private String getGameType(int diceQuantity, int numberOfColumns) {
         String gameType = "";
 
@@ -369,17 +397,12 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private void insertGame() {
-        String username = settings.getString("username", null);
         String type = getGameType(dice.getQuantity(), grid.getNumOfCols(true));
         String game = grid.getGameString();
         int result = grid.getFinalResult();
         int duration = (int) ((SystemClock.elapsedRealtime() - cmTimer.getBase()) / 1000);
         float latitude = (float) lastLatitude;
         float longitude = (float) lastLongitude;
-        RestApi restApi = new RestAdapter.Builder()
-                .setEndpoint(RestApi.END_POINT)
-                .build()
-                .create(RestApi.class);
 
         restApi.insertGame(username, type, game, result, duration, latitude, longitude, new Callback<Response>() {
             @Override
@@ -391,6 +414,21 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             public void failure(RetrofitError error) {
                 Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void gameForfeited() {
+        restApi.gameForfeited(username, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                finish();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }

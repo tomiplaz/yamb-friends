@@ -94,16 +94,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 }
-
-/*
- * group dice under a group layout
- * group other views under another group layout
- * selected dice: new drawable or something else?
- * toast for announcements
- *
- * http://developer.android.com/guide/components/processes-and-threads.html
- * disable gvGrid when game is finished
- * don't waste cpu time for an0 if an0 not included
- * available cells related actions to functions
- *
- */

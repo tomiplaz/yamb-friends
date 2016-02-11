@@ -55,4 +55,11 @@ public interface RestApi {
             Callback<Response> callback
     );
 
+    @FormUrlEncoded
+    @POST("/gameForfeited.php")
+    void gameForfeited(
+            @Field("username") String username,
+            Callback<Response> callback
+    );
+
 }

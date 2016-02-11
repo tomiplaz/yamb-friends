@@ -5,7 +5,7 @@
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
-	$user = mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"));
+	$user = mysqli_fetch_array(db_query("SELECT password FROM users WHERE username='$username'"));
 
 	if (!$user) {
 		echo "User not found.";
