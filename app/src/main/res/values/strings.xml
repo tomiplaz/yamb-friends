@@ -50,6 +50,7 @@
     <string name="end_game_dialog_positive_button">Yes, end it</string>
     <string name="end_game_dialog_negative_button">No, don\'t end it</string>
 
+    <string name="settings_title">Settings</string>
     <string name="settings_an0_column_title">Pre-roll Announcement Column</string>
     <string name="settings_dice_count_title">Number of Dice</string>
     <string name="settings_dice_count_default">5</string>

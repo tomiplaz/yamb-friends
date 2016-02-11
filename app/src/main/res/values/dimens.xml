@@ -8,6 +8,8 @@
     <dimen name="title_size">28sp</dimen>
     <dimen name="title_bottom_margin">18dp</dimen>
 
+    <dimen name="default_fragment_height">340dp</dimen>
+
     <dimen name="default_top_margin">12dp</dimen>
     <dimen name="big_top_margin">24dp</dimen>
     <dimen name="default_side_margin">10dp</dimen>
