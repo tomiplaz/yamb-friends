@@ -60,6 +60,7 @@
     <string name="settings_shake_sensitivity_default">Medium</string>
     <string name="settings_sound_title">Sound</string>
 
+    <string name="stats_title">Statistics</string>
     <string name="placeholder">-</string>
     <string name="registered_users_label">Registered users:</string>
     <string name="total_games_played_label">Total games played:</string>

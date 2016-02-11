@@ -5,8 +5,12 @@
 
     <dimen name="main_title_size">35sp</dimen>
     <dimen name="main_title_bottom_margin">25dp</dimen>
+    <dimen name="title_size">28sp</dimen>
+    <dimen name="title_bottom_margin">18dp</dimen>
 
     <dimen name="default_top_margin">12dp</dimen>
+    <dimen name="big_top_margin">24dp</dimen>
+    <dimen name="default_side_margin">10dp</dimen>
 
     <dimen name="dice_size">40dp</dimen>
 
