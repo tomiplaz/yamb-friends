@@ -5,7 +5,7 @@
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
-	if (mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"))) {
+	if (db_query("SELECT * FROM users WHERE username='$username'") != false) {
 		echo "Username not available.";
 	} else {
 		$hashedPassword = sha1($password);

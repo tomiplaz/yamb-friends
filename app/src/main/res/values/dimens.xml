@@ -25,6 +25,6 @@
     <dimen name="edit_text_height">60dp</dimen>
     <dimen name="edit_text_button_margin">20dp</dimen>
 
-    <dimen name="leaderboard_number_width">6dp</dimen>
-    <dimen name="leaderboard_number_side_margin">4dp</dimen>
+    <dimen name="leaderboard_number_width">20dp</dimen>
+    <dimen name="leaderboard_number_side_margin">12dp</dimen>
 </resources>

@@ -4,237 +4,247 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context="com.plazonic.tomislav.yambfriends.LeaderboardFragment"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="left">
+    android:gravity="center">
 
     <LinearLayout
-        android:id="@+id/leaderboard_no1_layout"
+        android:id="@+id/leaderboard_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-        <TextView
-            android:id="@+id/leaderboard_no1_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no1_label"
-            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/leaderboard_no1_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/leaderboard_no1_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
+            <TextView
+                android:id="@+id/leaderboard_no1_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no1_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no1_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no2_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no2_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no2_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no3_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no3_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no3_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no3_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no4_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no4_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no4_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no4_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/leaderboard_no5_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no5_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no5_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no5_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no6_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no6_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no6_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no6_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no7_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no7_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no7_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no7_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no8_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no8_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no8_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no8_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no9_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no9_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no9_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no9_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leaderboard_no10_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/leaderboard_no10_label"
+                android:layout_width="@dimen/leaderboard_number_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/leaderboard_number_side_margin"
+                android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
+                android:text="@string/leaderboard_no10_label"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/leaderboard_no10_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/leaderboard_no2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/leaderboard_no2_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no2_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no2_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no3_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no3_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no3_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no4_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no4_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no4_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no4_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/leaderboard_no5_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no5_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no5_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no5_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no6_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no6_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no6_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no6_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no7_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no7_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no7_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no7_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no8_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no8_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no8_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no8_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no9_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no9_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no9_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no9_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/leaderboard_no10_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/leaderboard_no10_label"
-            android:layout_width="@dimen/leaderboard_number_width"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/leaderboard_number_side_margin"
-            android:layout_marginEnd="@dimen/leaderboard_number_side_margin"
-            android:text="@string/leaderboard_no10_label"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/leaderboard_no10_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:gravity="center"/>
-
-    </LinearLayout>
 
 </FrameLayout>

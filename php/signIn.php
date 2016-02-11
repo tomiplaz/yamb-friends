@@ -5,9 +5,9 @@
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
-	$user = mysqli_fetch_array(db_query("SELECT password FROM users WHERE username='$username'"));
+	$user = mysqli_fetch_assoc(db_query("SELECT password FROM users WHERE username='$username'"));
 
-	if (!$user) {
+	if ($user == null) {
 		echo "User not found.";
 	} elseif ($user['password'] != sha1($password)) {
 		echo "Invalid password.";

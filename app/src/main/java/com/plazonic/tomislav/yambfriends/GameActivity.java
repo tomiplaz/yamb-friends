@@ -100,11 +100,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         soundOn = settings.getBoolean("settings_sound", true);
 
         dice = new Dice(Integer.parseInt(settings.getString("settings_dice_count", "5")));
-        int[] diceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
+        int[] ivDiceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
         ivDice = new HashMap<>(dice.getQuantity(), 1);
         if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.diceView6).getParent()).removeView(findViewById(R.id.diceView6));
         for (int i = 0; i < dice.getQuantity(); i++) {
-            ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(diceIds[i]));
+            ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(ivDiceIds[i]));
             ivDice.get("ivDice" + (i + 1)).setTag(false);
         }
 

@@ -16,7 +16,7 @@
 		VALUES ('$username', '$type', '$game', '$result', '$duration', '$timeFinished')");
 
 	if ($username != null) {
-		$user = mysqli_fetch_array(db_query("SELECT * FROM users WHERE username='$username'"));
+		$user = mysqli_fetch_assoc(db_query("SELECT * FROM users WHERE username='$username'"));
 
 		$typePlayedField = $type . '_played';
 		$typeBestField = $type . '_best';

@@ -5,7 +5,7 @@
 	$username = $_POST['username'];
 
 	if ($username != null) {
-		$user = mysqli_fetch_array(db_query("SELECT games_forfeited FROM users WHERE username='$username'"));
+		$user = mysqli_fetch_assoc(db_query("SELECT games_forfeited FROM users WHERE username='$username'"));
 
 		$gamesForfeitedNew = $user['games_forfeited'] + 1;
 

@@ -73,9 +73,10 @@ public interface RestApi {
             Callback<Response> callback
     );
 
-    @GET("/getTop10.php")
-    void getTop10(
+    @GET("/getResult.php")
+    void getResult(
             @Query("type") String type,
+            @Query("number") int number,
             Callback<Response> callback
     );
 
