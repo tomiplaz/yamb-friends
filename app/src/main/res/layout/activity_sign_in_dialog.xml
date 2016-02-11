@@ -2,8 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="@dimen/dialog_activity_padding"
     tools:context=".SignInDialogActivity"
     android:orientation="vertical"
     android:layout_gravity="center"

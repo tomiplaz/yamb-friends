@@ -72,7 +72,19 @@
     <string name="an1d6_leaderboard_button">an1d6</string>
     <string name="an0d5_leaderboard_button">an0d5</string>
     <string name="an0d6_leaderboard_button">an0d6</string>
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="leaderboard_no1_label">1.</string>
+    <string name="leaderboard_no2_label">2.</string>
+    <string name="leaderboard_no3_label">3.</string>
+    <string name="leaderboard_no4_label">4.</string>
+    <string name="leaderboard_no5_label">5.</string>
+    <string name="leaderboard_no6_label">6.</string>
+    <string name="leaderboard_no7_label">7.</string>
+    <string name="leaderboard_no8_label">8.</string>
+    <string name="leaderboard_no9_label">9.</string>
+    <string name="leaderboard_no10_label">10.</string>
 
+    <string name="sign_in_title">Sign in</string>
     <string name="not_signed_in">You are not signed in!</string>
     <string name="new_account_dialog_button">New account</string>
     <string name="sign_out_button">Sign out</string>
@@ -92,6 +104,7 @@
     <string name="username_too_short">Username must be at least 5 characters long</string>
     <string name="password_too_short">Password must be at least 5 characters long</string>
 
+    <string name="profile_title">Profile</string>
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
     <string name="current_profile_image">Current profile image:</string>

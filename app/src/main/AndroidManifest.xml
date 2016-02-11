@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.plazonic.tomislav.yambfriends">
 
     <uses-feature
@@ -31,17 +32,18 @@
             android:name=".GameActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".StatsActivity" />
+        <activity
+            android:name=".LeaderboardDialogActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".NewAccountDialogActivity"
-            android:excludeFromRecents="false"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".SignInDialogActivity"
-            android:excludeFromRecents="false"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

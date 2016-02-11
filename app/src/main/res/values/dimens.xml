@@ -6,9 +6,11 @@
     <dimen name="main_title_size">35sp</dimen>
     <dimen name="main_title_bottom_margin">25dp</dimen>
     <dimen name="title_size">28sp</dimen>
-    <dimen name="title_bottom_margin">18dp</dimen>
+    <dimen name="title_bottom_margin">20dp</dimen>
 
     <dimen name="default_fragment_height">340dp</dimen>
+
+    <dimen name="dialog_activity_padding">12dp</dimen>
 
     <dimen name="default_top_margin">12dp</dimen>
     <dimen name="big_top_margin">24dp</dimen>
@@ -22,4 +24,7 @@
 
     <dimen name="edit_text_height">60dp</dimen>
     <dimen name="edit_text_button_margin">20dp</dimen>
+
+    <dimen name="leaderboard_number_width">6dp</dimen>
+    <dimen name="leaderboard_number_side_margin">4dp</dimen>
 </resources>
