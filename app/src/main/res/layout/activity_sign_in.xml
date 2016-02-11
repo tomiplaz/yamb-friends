@@ -23,18 +23,21 @@
         android:id="@+id/new_account_dialog_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_top_margin"
         android:text="@string/new_account_dialog_button" />
 
     <Button
         android:id="@+id/sign_in_dialog_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_top_margin"
         android:text="@string/sign_in_button" />
 
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_top_margin"
         android:text="@string/sign_out_button" />
 
     <TextView

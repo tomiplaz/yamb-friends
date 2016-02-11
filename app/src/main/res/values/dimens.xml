@@ -11,6 +11,7 @@
     <dimen name="default_fragment_height">340dp</dimen>
 
     <dimen name="dialog_activity_padding">12dp</dimen>
+    <dimen name="dialog_activity_margin">14dp</dimen>
 
     <dimen name="default_top_margin">12dp</dimen>
     <dimen name="big_top_margin">24dp</dimen>

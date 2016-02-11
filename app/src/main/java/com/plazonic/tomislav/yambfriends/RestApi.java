@@ -80,4 +80,11 @@ public interface RestApi {
             Callback<Response> callback
     );
 
+    @GET("/getUserValue.php")
+    void getUserValue(
+            @Query("username") String username,
+            @Query("field") String field,
+            Callback<Response> callback
+    );
+
 }

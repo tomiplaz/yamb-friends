@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/dialog_activity_padding"
+    android:layout_margin="@dimen/dialog_activity_margin"
     tools:context="com.plazonic.tomislav.yambfriends.LeaderboardDialogActivity"
     android:orientation="vertical"
     android:layout_gravity="center"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.plazonic.tomislav.yambfriends">
 
     <uses-feature
@@ -37,12 +36,15 @@
             android:name=".LeaderboardDialogActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".ProfileActivity" />
         <activity
             android:name=".NewAccountDialogActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".SignInDialogActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".MyStatsDialogActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
     </application>
 

@@ -57,8 +57,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         ivProfileImage = (ImageView) findViewById(R.id.profile_image);
         ivProfileImageInfo = (TextView) findViewById(R.id.profile_image_info);
+
         findViewById(R.id.capture_an_image_button).setOnClickListener(this);
         findViewById(R.id.choose_an_image_button).setOnClickListener(this);
+        findViewById(R.id.my_stats_button).setOnClickListener(this);
 
         restApi = new RestAdapter.Builder()
                 .setEndpoint(RestApi.END_POINT)
@@ -71,6 +73,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.my_stats_button:
+                openMyStats();
+                break;
             case R.id.capture_an_image_button:
                 captureAnImage();
                 break;
@@ -116,6 +121,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             File imageFile = new File(storageDirectory.getPath() + File.separator + settings.getString("username", null) + ".jpg");
             return Uri.fromFile(imageFile);
         } else return null;
+    }
+
+    private void openMyStats() {
+        startActivity(new Intent().setClass(getBaseContext(), MyStatsDialogActivity.class));
     }
 
     private void captureAnImage() {

@@ -105,6 +105,7 @@
     <string name="password_too_short">Password must be at least 5 characters long</string>
 
     <string name="profile_title">Profile</string>
+    <string name="my_stats_button">My stats</string>
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
     <string name="current_profile_image">Current profile image:</string>
@@ -114,5 +115,20 @@
     <string name="could_not_read_image_file">Could not read image file</string>
     <string name="file_not_found">File not found</string>
     <string name="no_profile_image">No profile image</string>
+
+    <string name="my_stats_title">My stats</string>
+    <string name="time_registered_label">Time registered:</string>
+    <string name="games_played_label">Games played:</string>
+    <string name="games_forfeited_label">Games forfeited:</string>
+    <string name="total_time_played_label">Total time played:</string>
+    <string name="average_game_duration_label">Average game duration:</string>
+    <string name="an1d5_best_label">An1d5 best:</string>
+    <string name="an1d6_best_label">An1d6 best:</string>
+    <string name="an0d5_best_label">An0d5 best:</string>
+    <string name="an0d6_best_label">An0d6 best:</string>
+    <string name="an1d5_average_label">An1d5 average:</string>
+    <string name="an1d6_average_label">An1d6 average:</string>
+    <string name="an0d5_average_label">An0d5 average:</string>
+    <string name="an0d6_average_label">An0d6 average:</string>
 
 </resources>
