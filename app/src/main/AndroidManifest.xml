@@ -41,6 +41,7 @@
             android:name=".SignInDialogActivity"
             android:excludeFromRecents="false"
             android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

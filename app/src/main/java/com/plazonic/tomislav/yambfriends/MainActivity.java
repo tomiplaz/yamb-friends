@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.settings_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.profile_button).setOnClickListener(this);
+        findViewById(R.id.stats_button).setOnClickListener(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     }
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.settings_button:
                 goToSettings();
                 break;
+            case R.id.stats_button:
+                goToStats();
+                break;
             case R.id.sign_in_button:
                 goToSignIn();
                 break;
@@ -83,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goToSettings() {
         startActivity(new Intent().setClass(getBaseContext(), SettingsActivity.class));
+    }
+
+    private void goToStats() {
+        startActivity(new Intent().setClass(getBaseContext(), StatsActivity.class));
     }
 
     private void goToSignIn() {

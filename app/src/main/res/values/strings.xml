@@ -4,6 +4,7 @@
 
     <string name="play_button">Play</string>
     <string name="settings_button">Settings</string>
+    <string name="stats_button">Stats</string>
     <string name="sign_in_button">Sign in</string>
     <string name="profile_button">Profile</string>
 
@@ -58,6 +59,17 @@
     <string name="settings_shake_sensitivity_title">Shake Sensitivity</string>
     <string name="settings_shake_sensitivity_default">Medium</string>
     <string name="settings_sound_title">Sound</string>
+
+    <string name="placeholder">-</string>
+    <string name="registered_users_label">Registered users:</string>
+    <string name="total_games_played_label">Total games played:</string>
+    <string name="games_played_registered_label">Games played (registered):</string>
+    <string name="games_played_anonymous_label">Games played (anonymous):</string>
+    <string name="leaderboards_label">Leaderboards:</string>
+    <string name="an1d5_leaderboard_button">an1d5</string>
+    <string name="an1d6_leaderboard_button">an1d6</string>
+    <string name="an0d5_leaderboard_button">an0d5</string>
+    <string name="an0d6_leaderboard_button">an0d6</string>
 
     <string name="not_signed_in">You are not signed in!</string>
     <string name="new_account_dialog_button">New account</string>

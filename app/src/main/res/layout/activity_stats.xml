@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.plazonic.tomislav.yambfriends.StatsActivity"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/registered_users_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registered_users_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/registered_users_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        android:layout_toRightOf="@id/registered_users_label"
+        android:layout_toEndOf="@id/registered_users_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/total_games_played_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_games_played_label"
+        android:layout_below="@id/registered_users_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/total_games_played_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        android:layout_below="@id/registered_users_label"
+        android:layout_toRightOf="@id/total_games_played_label"
+        android:layout_toEndOf="@id/total_games_played_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/games_played_registered_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/games_played_registered_label"
+        android:layout_below="@id/total_games_played_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/games_played_registered_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        android:layout_below="@id/total_games_played_label"
+        android:layout_toRightOf="@id/games_played_registered_label"
+        android:layout_toEndOf="@id/games_played_registered_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/games_played_anonymous_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/games_played_anonymous_label"
+        android:layout_below="@id/games_played_registered_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/games_played_anonymous_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        android:layout_below="@id/games_played_registered_label"
+        android:layout_toRightOf="@id/games_played_anonymous_label"
+        android:layout_toEndOf="@id/games_played_anonymous_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/leaderboards_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leaderboards_label"
+        android:layout_below="@id/games_played_anonymous_label"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/an1d5_leaderboard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/an1d5_leaderboard_button"
+        android:layout_below="@id/leaderboards_label"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/an1d6_leaderboard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/an1d6_leaderboard_button"
+        android:layout_below="@id/leaderboards_label"
+        android:layout_toRightOf="@id/an1d5_leaderboard_button"
+        android:layout_toEndOf="@id/an1d5_leaderboard_button"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/an0d5_leaderboard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/an0d5_leaderboard_button"
+        android:layout_below="@id/an1d5_leaderboard_button"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/an0d6_leaderboard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/an0d6_leaderboard_button"
+        android:layout_below="@id/an1d5_leaderboard_button"
+        android:layout_toRightOf="@id/an0d5_leaderboard_button"
+        android:layout_toEndOf="@id/an0d5_leaderboard_button"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

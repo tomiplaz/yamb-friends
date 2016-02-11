@@ -62,4 +62,21 @@ public interface RestApi {
             Callback<Response> callback
     );
 
+    @GET("/getNumberOfUsers.php")
+    void getNumberOfUsers(
+            Callback<Response> callback
+    );
+
+    @GET("/getNumberOfGamesPlayed.php")
+    void getNumberOfGamesPlayed(
+            @Query("filter") String filter,
+            Callback<Response> callback
+    );
+
+    @GET("/getTop10.php")
+    void getTop10(
+            @Query("type") String type,
+            Callback<Response> callback
+    );
+
 }
