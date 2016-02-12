@@ -19,7 +19,7 @@
 
     <dimen name="dice_size">40dp</dimen>
 
-    <dimen name="profile_image_preview_size">100dp</dimen>
+    <dimen name="profile_image_preview_size">150dp</dimen>
 
     <dimen name="line_separator_margin">10dp</dimen>
 

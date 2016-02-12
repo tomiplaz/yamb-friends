@@ -54,7 +54,8 @@
         android:layout_height="wrap_content"
         android:maxHeight="@dimen/profile_image_preview_size"
         android:maxWidth="@dimen/profile_image_preview_size"
-        android:scaleType="centerInside"/>
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
 
     <TextView
         android:id="@+id/profile_image_info"
