@@ -42,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private SharedPreferences settings;
     private String username;
     private ImageView ivProfileImage;
-    private TextView ivProfileImageInfo;
+    private TextView tvProfileImageInfo, tvCurrentNeighbour;
     private Uri fileUri;
     private ProgressDialog progressDialog;
     private RestApi restApi;
@@ -56,7 +56,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         username = settings.getString("username", null);
 
         ivProfileImage = (ImageView) findViewById(R.id.profile_image);
-        ivProfileImageInfo = (TextView) findViewById(R.id.profile_image_info);
+        tvProfileImageInfo = (TextView) findViewById(R.id.profile_image_info);
+        tvCurrentNeighbour = (TextView) findViewById(R.id.current_neighbour_value);
 
         findViewById(R.id.capture_an_image_button).setOnClickListener(this);
         findViewById(R.id.choose_an_image_button).setOnClickListener(this);
@@ -67,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 .build()
                 .create(RestApi.class);
 
+        getNeighbour();
         refreshImageView();
     }
 
@@ -271,10 +273,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (image != null) {
             ivProfileImage.setImageBitmap(image);
             ivProfileImage.setVisibility(View.VISIBLE);
-            ivProfileImageInfo.setVisibility(View.GONE);
+            tvProfileImageInfo.setVisibility(View.GONE);
         } else {
             ivProfileImage.setVisibility(View.GONE);
-            ivProfileImageInfo.setVisibility(View.VISIBLE);
+            tvProfileImageInfo.setVisibility(View.VISIBLE);
         }
     }
 
@@ -287,6 +289,31 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
             return false;
         }
+    }
+
+    private void getNeighbour() {
+        restApi.getNeighbour(username, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                try {
+                    InputStream inputStream = response.getBody().in();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String responseString = bufferedReader.readLine();
+
+                    if (!responseString.equals("No neighbour.")) {
+                        tvCurrentNeighbour.setText(responseString);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

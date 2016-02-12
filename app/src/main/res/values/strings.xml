@@ -108,6 +108,7 @@
     <string name="my_stats_button">My stats</string>
     <string name="capture_an_image_button">Capture an image</string>
     <string name="choose_an_image_button">Choose an image</string>
+    <string name="current_neighbour_label">Current neighbour:</string>
     <string name="current_profile_image">Current profile image:</string>
     <string name="uploading_image">Uploading image&#8230;</string>
     <string name="image_capture_failed">Image capture failed</string>
