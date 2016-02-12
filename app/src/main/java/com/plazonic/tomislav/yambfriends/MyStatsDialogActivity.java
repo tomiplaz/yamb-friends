@@ -4,12 +4,15 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -20,6 +23,7 @@ public class MyStatsDialogActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
     private String username;
+    private Map<String, TextView> tvMyStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,28 @@ public class MyStatsDialogActivity extends AppCompatActivity {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         username = settings.getString("username", null);
+
+        tvMyStats = new HashMap<>(13, 1);
+        tvMyStats.put("time_registered", (TextView) findViewById(R.id.time_registered_value));
+        tvMyStats.put("games_played", (TextView) findViewById(R.id.games_played_value));
+        tvMyStats.put("games_forfeited", (TextView) findViewById(R.id.games_forfeited_value));
+        tvMyStats.put("total_time_played", (TextView) findViewById(R.id.total_time_played_value));
+        tvMyStats.put("average_game_duration", (TextView) findViewById(R.id.average_game_duration_value));
+        tvMyStats.put("an1d5_best", (TextView) findViewById(R.id.an1d5_best_value));
+        tvMyStats.put("an1d6_best", (TextView) findViewById(R.id.an1d6_best_value));
+        tvMyStats.put("an0d5_best", (TextView) findViewById(R.id.an0d5_best_value));
+        tvMyStats.put("an0d6_best", (TextView) findViewById(R.id.an0d6_best_value));
+        tvMyStats.put("an1d5_average", (TextView) findViewById(R.id.an1d5_average_value));
+        tvMyStats.put("an1d6_average", (TextView) findViewById(R.id.an1d6_average_value));
+        tvMyStats.put("an0d5_average", (TextView) findViewById(R.id.an0d5_average_value));
+        tvMyStats.put("an0d6_average", (TextView) findViewById(R.id.an0d6_average_value));
+
+        for (String key : tvMyStats.keySet()) {
+            getUserValue(key);
+        }
     }
 
-    private void getUserValue(String field) {
+    private void getUserValue(final String field) {
         RestApi restApi = new RestAdapter.Builder()
                 .setEndpoint(RestApi.END_POINT)
                 .build()
@@ -43,7 +66,17 @@ public class MyStatsDialogActivity extends AppCompatActivity {
                     InputStream inputStream = response.getBody().in();
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    tv.setText(bufferedReader.readLine());
+                    String responseString = bufferedReader.readLine();
+
+                    if (field.equals("total_time_played") || field.equals("average_game_duration")) {
+                        int seconds = Integer.parseInt(responseString);
+                        tvMyStats.get(field).setText(secondsToFormatedTime(seconds));
+                    } else if (field.equals("time_registered")) {
+                        String date = responseString.split(" ")[0];
+                        tvMyStats.get(field).setText(date);
+                    } else {
+                        tvMyStats.get(field).setText(responseString);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -54,5 +87,13 @@ public class MyStatsDialogActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private String secondsToFormatedTime(int seconds) {
+        long s = seconds % 60;
+        long min = (seconds / 60) % 60;
+        long h = (seconds / (60 * 60)) % 24;
+
+        return String.format("%02d:%02d:%02d", h, min, s);
     }
 }

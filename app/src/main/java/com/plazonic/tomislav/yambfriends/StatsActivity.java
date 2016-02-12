@@ -48,9 +48,9 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
                 .create(RestApi.class);
 
         getNumberOfUsers();
-        getNumberOfGamesPlayed("total");
-        getNumberOfGamesPlayed("registered");
-        getNumberOfGamesPlayed("anonymous");
+        for (String key : tvGamesPlayed.keySet()) {
+            getNumberOfGamesPlayed(key);
+        }
     }
 
     @Override
