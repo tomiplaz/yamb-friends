@@ -35,6 +35,8 @@ public class MyStatsDialogActivity extends AppCompatActivity {
 
         tvMyStats = new HashMap<>(13, 1);
         tvMyStats.put("time_registered", (TextView) findViewById(R.id.time_registered_value));
+        tvMyStats.put("latitude", (TextView) findViewById(R.id.latitude_value));
+        tvMyStats.put("longitude", (TextView) findViewById(R.id.longitude_value));
         tvMyStats.put("games_played", (TextView) findViewById(R.id.games_played_value));
         tvMyStats.put("games_forfeited", (TextView) findViewById(R.id.games_forfeited_value));
         tvMyStats.put("total_time_played", (TextView) findViewById(R.id.total_time_played_value));

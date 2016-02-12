@@ -118,6 +118,8 @@
 
     <string name="my_stats_title">My stats</string>
     <string name="time_registered_label">Date registered:</string>
+    <string name="latitude_label">Last latitude:</string>
+    <string name="longitude_label">Last longitude:</string>
     <string name="games_played_label">Games played:</string>
     <string name="games_forfeited_label">Games forfeited:</string>
     <string name="total_time_played_label">Total time played:</string>
