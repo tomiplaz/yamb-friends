@@ -87,10 +87,4 @@ public interface RestApi {
             Callback<Response> callback
     );
 
-    @GET("getNeighbour.php")
-    void getNeighbour(
-            @Query("username") String username,
-            Callback<Response> callback
-    );
-
 }
