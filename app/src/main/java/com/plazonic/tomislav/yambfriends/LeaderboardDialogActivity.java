@@ -77,7 +77,9 @@ public class LeaderboardDialogActivity extends AppCompatActivity {
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String responseString = bufferedReader.readLine();
 
-                    if (!responseString.equals("Result not found.")) {
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else if (!responseString.equals("Result not found.")) {
                         tvLeaders.get("tvLeader" + number).setText(responseString);
                     }
                 } catch (IOException e) {
@@ -87,7 +89,7 @@ public class LeaderboardDialogActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }

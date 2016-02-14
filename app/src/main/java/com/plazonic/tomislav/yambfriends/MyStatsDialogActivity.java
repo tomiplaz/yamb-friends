@@ -70,14 +70,23 @@ public class MyStatsDialogActivity extends AppCompatActivity {
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String responseString = bufferedReader.readLine();
 
-                    if (field.equals("total_time_played") || field.equals("average_game_duration")) {
-                        int seconds = Integer.parseInt(responseString);
-                        tvMyStats.get(field).setText(secondsToFormatedTime(seconds));
-                    } else if (field.equals("time_registered")) {
-                        String date = responseString.split(" ")[0];
-                        tvMyStats.get(field).setText(date);
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
                     } else {
-                        tvMyStats.get(field).setText(responseString);
+                        switch (field) {
+                            case "total_time_played":
+                            case "average_game_duration":
+                                int seconds = Integer.parseInt(responseString);
+                                tvMyStats.get(field).setText(secondsToFormatedTime(seconds));
+                                break;
+                            case "time_registered":
+                                String date = responseString.split(" ")[0];
+                                tvMyStats.get(field).setText(date);
+                                break;
+                            default:
+                                tvMyStats.get(field).setText(responseString);
+                                break;
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -86,7 +95,7 @@ public class MyStatsDialogActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }

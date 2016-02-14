@@ -404,16 +404,17 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         float latitude = (float) lastLatitude;
         float longitude = (float) lastLongitude;
 
+        Toast.makeText(getApplicationContext(), "Final result: " + result, Toast.LENGTH_LONG).show();
+
         restApi.insertGame(username, type, game, result, duration, latitude, longitude, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+                // Successful insert.
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "Final result: " + grid.getFinalResult(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -427,7 +428,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

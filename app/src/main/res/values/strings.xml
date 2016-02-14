@@ -132,5 +132,6 @@
     <string name="an1d6_average_label">An1d6 average:</string>
     <string name="an0d5_average_label">An0d5 average:</string>
     <string name="an0d6_average_label">An0d6 average:</string>
+    <string name="php_error">PHP error</string>
 
 </resources>

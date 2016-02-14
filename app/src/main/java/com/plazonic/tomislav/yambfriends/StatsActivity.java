@@ -79,7 +79,13 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
                     InputStream inputStream = response.getBody().in();
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    tvRegisteredUsers.setText(bufferedReader.readLine());
+                    String responseString = bufferedReader.readLine();
+
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        tvRegisteredUsers.setText(responseString);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -87,7 +93,7 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -100,7 +106,13 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
                     InputStream inputStream = response.getBody().in();
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    tvGamesPlayed.get(filter).setText(bufferedReader.readLine());
+                    String responseString = bufferedReader.readLine();
+
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        tvGamesPlayed.get(filter).setText(responseString);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,7 +120,7 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }

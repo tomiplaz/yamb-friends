@@ -151,8 +151,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     InputStream inputStream = response.getBody().in();
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    Toast.makeText(getApplicationContext(), bufferedReader.readLine(), Toast.LENGTH_SHORT).show();
-                    refreshImageView();
+                    String responseString = bufferedReader.readLine();
+
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
+                        refreshImageView();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -161,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void failure(RetrofitError error) {
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -220,7 +226,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String responseString = bufferedReader.readLine();
 
-                    if (responseString.equals("User not found.")) {
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else if (responseString.equals("User not found.")) {
                         Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
                     } else {
                         new LoadImage().execute(responseString);
@@ -233,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void failure(RetrofitError error) {
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
                 updateImageUI(null);
             }
         });

@@ -115,10 +115,14 @@ public class SignInDialogActivity extends AppCompatActivity implements View.OnCl
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String responseString = bufferedReader.readLine();
 
-                    if (responseString.equals("Signed in.")) {
-                        settings.edit().putString("username", username).apply();
+                    if (responseString.contains("PHP Error")) {
+                        Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (responseString.equals("Signed in.")) {
+                            settings.edit().putString("username", username).apply();
+                        }
+                        Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
 
                     finish();
                 } catch (IOException e) {
@@ -128,7 +132,7 @@ public class SignInDialogActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
     }
