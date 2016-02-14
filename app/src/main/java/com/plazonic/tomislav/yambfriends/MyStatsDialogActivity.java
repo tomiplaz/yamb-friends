@@ -21,7 +21,6 @@ import retrofit.client.Response;
 
 public class MyStatsDialogActivity extends AppCompatActivity {
 
-    private SharedPreferences settings;
     private String username;
     private Map<String, TextView> tvMyStats;
 
@@ -30,7 +29,7 @@ public class MyStatsDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_stats_dialog);
 
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         username = settings.getString("username", null);
 
         tvMyStats = new HashMap<>(13, 1);
