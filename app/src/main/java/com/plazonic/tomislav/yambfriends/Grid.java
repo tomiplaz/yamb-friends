@@ -125,12 +125,12 @@ public class Grid {
         String currentCellName;
 
         for (int i = 0; i < this.numOfCols; i++) {
-            addColumn = true;
+            addColumn = false;
             rowIterator: for (int j = 0; j < 15; j++) {
                 if (this.ROW_NAMES.get(j).contains("eq")) continue;
                 currentCellName = this.ROW_NAMES.get(j) + "_" + this.COL_NAMES.get(i);
-                if (!this.gameModel.get(currentCellName).equals(-1)) {
-                    addColumn = false;
+                if (this.gameModel.get(currentCellName).equals(-1)) {
+                    addColumn = true;
                     break rowIterator;
                 }
             }
