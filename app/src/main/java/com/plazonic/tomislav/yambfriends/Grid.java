@@ -129,7 +129,7 @@ public class Grid {
             rowIterator: for (int j = 0; j < 15; j++) {
                 if (this.ROW_NAMES.get(j).contains("eq")) continue;
                 currentCellName = this.ROW_NAMES.get(j) + "_" + this.COL_NAMES.get(i);
-                if (this.gameModel.get(currentCellName).equals(-1)) {
+                if (!this.gameModel.get(currentCellName).equals(-1)) {
                     addColumn = false;
                     break rowIterator;
                 }
