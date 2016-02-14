@@ -15,8 +15,9 @@
 
 	if (isset($games[$number])) {
 		$game = $games[$number];
-		echo utf8_decode($game['username'] . " (" . $game['result'] . ")");
+		header('Content-Type: text/html; charset=utf-8');
+		echo $game['username'] . " (" . $game['result'] . ")";
 	} else {
-		echo "Result not found.";
+		echo "Result not found";
 	}
 ?>

@@ -79,7 +79,7 @@ public class LeaderboardDialogActivity extends AppCompatActivity {
 
                     if (responseString.contains("PHP Error")) {
                         Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
-                    } else if (!responseString.equals("Result not found.")) {
+                    } else if (!responseString.equals("Result not found")) {
                         tvLeaders.get("tvLeader" + number).setText(responseString);
                     }
                 } catch (IOException e) {

@@ -228,7 +228,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                     if (responseString.contains("PHP Error")) {
                         Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
-                    } else if (responseString.equals("User not found.")) {
+                    } else if (responseString.equals("User not found")) {
                         Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
                     } else {
                         new LoadImage().execute(responseString);

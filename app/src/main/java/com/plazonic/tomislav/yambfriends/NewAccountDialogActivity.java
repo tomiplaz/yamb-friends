@@ -129,7 +129,7 @@ public class NewAccountDialogActivity extends AppCompatActivity implements View.
                     if (responseString.contains("PHP Error")) {
                         Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
                     } else {
-                        if (responseString.equals("Account created.")) {
+                        if (responseString.equals("Account created")) {
                             settings.edit().putString("username", username).apply();
                         }
                         Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();

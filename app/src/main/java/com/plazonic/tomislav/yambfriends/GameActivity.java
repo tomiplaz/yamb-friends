@@ -1,6 +1,7 @@
 package com.plazonic.tomislav.yambfriends;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -56,6 +57,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private ArrayAdapter<String> gvAdapter;
     private Dice dice;
     private Map<String, ImageView> ivDice;
+    private boolean diceClickable;
     private TextView tvRollNo;
     private Chronometer cmTimer;
     private long cmTimerElapsed;
@@ -64,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient googleApiClient;
     private double lastLatitude = 0, lastLongitude = 0;
 
+    private ProgressDialog progressDialog;
     private RestApi restApi;
 
     @Override
@@ -265,12 +268,23 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                     grid.getAnnouncedCellName() == null) {
                 grid.setAnnouncedCellName(clickedCellName);
                 grid.updateAvailableCellsNames(dice.getRollNumber());
-                Toast.makeText(getApplicationContext(), "Announced: " + clickedCellName, Toast.LENGTH_SHORT).show();
-            } else {
+
+                // For An0 column announcement.
+                if (dice.getRollNumber() == 0) {
+                    grid.setInputDone(false);
+                    diceSetClickable(false);
+                }
+
+                Toast.makeText(getApplicationContext(), "Announced: " + clickedCellName.replace("_", "-"), Toast.LENGTH_SHORT).show();
+            } else if (dice.getRollNumber() != 0) {
+                unclickDice();
+                diceSetClickable(false);
+
                 int result = dice.calculateInput(grid.getCellRowName(clickedCellName));
                 grid.setModelValue(clickedCellName, result);
                 grid.updateListCells(clickedCellName, Integer.toString(result));
                 gvAdapter.notifyDataSetChanged();
+
                 grid.setLastInputCellName(clickedCellName);
                 dice.setLastRollNumber(dice.getRollNumber());
                 grid.setInputDone(true);
@@ -322,15 +336,14 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void rollEvent() {
         if (!grid.isGameFinished()) {
+            if (!diceClickable) diceSetClickable(true);
+
             if (!grid.getInputDone() && dice.getRollNumber() == 3) {
                 Toast.makeText(getApplicationContext(), "Input required!", Toast.LENGTH_SHORT).show();
             }
 
             if (grid.getInputDone()) {
-                for (int i = 0; i < dice.getQuantity(); i++) {
-                    ivDice.get("ivDice" + (i + 1)).setTag(false);
-                    ivDice.get("ivDice" + (i + 1)).clearColorFilter();
-                }
+                unclickDice();
                 grid.setInputDone(false);
                 grid.setAnnouncedCellName(null);
             }
@@ -348,6 +361,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
 
+            if (dice.getRollNumber() == 3) {
+                unclickDice();
+                diceSetClickable(false);
+            }
+
             tvRollNo.setText(String.format("%d", dice.getRollNumber()));
         }
     }
@@ -355,11 +373,17 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private void undoEvent() {
         if (!grid.isGameFinished()) {
             if (grid.getInputDone()) {
+                diceSetClickable(true);
                 dice.setRollNumber(dice.getLastRollNumber());
                 tvRollNo.setText(String.format("%d", dice.getRollNumber()));
+
                 grid.setModelValue(grid.getLastInputCellName(), -1);
                 grid.updateListCells(grid.getLastInputCellName(), "");
                 gvAdapter.notifyDataSetChanged();
+
+                if (grid.getLastInputCellName().contains("an1") || grid.getLastInputCellName().contains("an0")) {
+                    grid.setAnnouncedCellName(grid.getLastInputCellName());
+                }
                 grid.updateAvailableCellsNames(dice.getRollNumber());
 
                 if (grid.getLastSumCellsNames().size() > 0) {
@@ -371,20 +395,34 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
 
                 grid.setInputDone(false);
-            } else if ((dice.getRollNumber() == 0 || dice.getRollNumber() == 1) && grid.getAnnouncedCellName() != null) {
-                grid.setAnnouncedCellName(null);
-                grid.updateAvailableCellsNames(dice.getRollNumber());
+            } else if (grid.getAnnouncedCellName() != null) {
+                if (dice.getRollNumber() == 0 || (dice.getRollNumber() == 1 && grid.getAnnouncedCellName().contains("an1"))) {
+                    grid.setAnnouncedCellName(null);
+                    grid.updateAvailableCellsNames(dice.getRollNumber());
+                }
             }
         }
     }
 
     private void disableUI() {
         gvGrid.setClickable(false);
-        for (int i = 0; i < dice.getQuantity(); i++) {
-            ivDice.get("ivDice" + (i + 1)).setClickable(false);
-        }
+        diceSetClickable(false);
         btnRoll.setClickable(false);
         btnUndo.setClickable(false);
+    }
+
+    private void diceSetClickable(boolean clickable) {
+        diceClickable = clickable;
+        for (int i = 0; i < dice.getQuantity(); i++) {
+            ivDice.get("ivDice" + (i + 1)).setClickable(clickable);
+        }
+    }
+
+    private void unclickDice() {
+        for (int i = 0; i < dice.getQuantity(); i++) {
+            ivDice.get("ivDice" + (i + 1)).setTag(false);
+            ivDice.get("ivDice" + (i + 1)).clearColorFilter();
+        }
     }
 
     private String getGameType(int diceQuantity, int numberOfColumns) {
@@ -406,14 +444,16 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         Toast.makeText(getApplicationContext(), "Final result: " + result, Toast.LENGTH_LONG).show();
 
+        showProgressDialog();
         restApi.insertGame(username, type, game, result, duration, latitude, longitude, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                // Successful insert.
+                hideProgressDialog();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                hideProgressDialog();
                 Toast.makeText(getApplicationContext(), R.string.unsuccessful_http_response, Toast.LENGTH_SHORT).show();
             }
         });
@@ -432,6 +472,22 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 finish();
             }
         });
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Saving...");
+        }
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 
 }

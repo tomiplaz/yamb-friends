@@ -8,10 +8,10 @@
 	$user = mysqli_fetch_assoc(db_query("SELECT password FROM users WHERE username='$username'"));
 
 	if ($user == null) {
-		echo "User not found.";
+		echo "User not found";
 	} elseif ($user['password'] != sha1($password)) {
-		echo "Invalid password.";
+		echo "Invalid password";
 	} else {
-		echo "Signed in.";
+		echo "Signed in";
 	}
 ?>

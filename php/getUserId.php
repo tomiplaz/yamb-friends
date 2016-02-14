@@ -7,7 +7,7 @@
 	$user = mysqli_fetch_assoc(db_query("SELECT id FROM users WHERE username='$username'"));
 
 	if ($user == null) {
-		echo "User not found.";
+		echo "User not found";
 	} else {
 		echo $user['id'];
 	}

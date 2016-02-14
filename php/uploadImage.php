@@ -10,8 +10,8 @@
 	$path = "images/$userId.jpeg";
 
 	if (file_put_contents($path, base64_decode($image)) === false) {
-		echo "Image upload failed.";
+		echo "Image upload failed";
 	} else {
-		echo "Image uploaded.";
+		echo "Image uploaded";
 	}
 ?>

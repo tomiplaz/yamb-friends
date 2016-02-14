@@ -118,7 +118,7 @@ public class SignInDialogActivity extends AppCompatActivity implements View.OnCl
                     if (responseString.contains("PHP Error")) {
                         Toast.makeText(getApplicationContext(), R.string.php_error, Toast.LENGTH_SHORT).show();
                     } else {
-                        if (responseString.equals("Signed in.")) {
+                        if (responseString.equals("Signed in")) {
                             settings.edit().putString("username", username).apply();
                         }
                         Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
