@@ -36,6 +36,7 @@
     <string name="_x_an0">Column for announcements before the 1st roll.</string>
 
     <string name="roll_button">Roll</string>
+    <string name="zero">0</string>
     <string name="undo_button">Undo</string>
 
     <string name="description_dice1">First dice.</string>

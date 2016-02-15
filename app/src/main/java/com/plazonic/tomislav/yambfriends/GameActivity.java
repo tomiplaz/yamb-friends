@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -77,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         username = settings.getString("username", null);
 
         if (settings.getString("settings_handedness", "Right-handed").equals("Left-handed")) {
-            LinearLayout llOtherLayout = (LinearLayout) findViewById(R.id.otherLayout);
+            LinearLayout llOtherLayout = (LinearLayout) findViewById(R.id.other_layout);
             List<View> childViews = new ArrayList<>(4);
             for (int i = 0; i < 4; i++) {
                 childViews.add(llOtherLayout.getChildAt(i));
@@ -103,25 +104,25 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         soundOn = settings.getBoolean("settings_sound", true);
 
         dice = new Dice(Integer.parseInt(settings.getString("settings_dice_count", "5")));
-        int[] ivDiceIds = {R.id.diceView1, R.id.diceView2, R.id.diceView3, R.id.diceView4, R.id.diceView5, R.id.diceView6};
+        int[] ivDiceIds = {R.id.dice_view_1, R.id.dice_view_2, R.id.dice_view_3, R.id.dice_view_4, R.id.dice_view_5, R.id.dice_view_6};
         ivDice = new HashMap<>(dice.getQuantity(), 1);
-        if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.diceView6).getParent()).removeView(findViewById(R.id.diceView6));
+        if (dice.getQuantity() < 6) ((ViewGroup) findViewById(R.id.dice_view_6).getParent()).removeView(findViewById(R.id.dice_view_6));
         for (int i = 0; i < dice.getQuantity(); i++) {
             ivDice.put("ivDice" + (i + 1), (ImageView) findViewById(ivDiceIds[i]));
             ivDice.get("ivDice" + (i + 1)).setTag(false);
         }
 
-        tvRollNo = (TextView) findViewById(R.id.rollNo);
+        tvRollNo = (TextView) findViewById(R.id.roll_number);
         tvRollNo.setText(String.format("%d", dice.getRollNumber()));
 
         cmTimer = (Chronometer) findViewById(R.id.timer);
         cmTimerElapsed = 0;
 
-        btnRoll = (Button) findViewById(R.id.rollBtn);
-        btnUndo = (Button) findViewById(R.id.undoBtn);
+        btnRoll = (Button) findViewById(R.id.roll_button);
+        btnUndo = (Button) findViewById(R.id.undo_button);
 
         grid = new Grid(settings.getBoolean("settings_an0_column", false));
-        gvGrid = (GridView) findViewById(R.id.gridView);
+        gvGrid = (GridView) findViewById(R.id.gridview);
         gvGrid.setNumColumns(grid.getNumOfCols(false));
         gvAdapter = new ArrayAdapter<>(this, R.layout.grid_cell, grid.getListCells());
         gvGrid.setAdapter(gvAdapter);
@@ -131,6 +132,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 gridCellClickEvent(position);
             }
         });
+
+        LinearLayout llGridView = (LinearLayout) findViewById(R.id.gridview_layout);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        llGridView.getLayoutParams().width = (int) Math.ceil(53 * metrics.density) * grid.getNumOfCols(false);
 
         btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
