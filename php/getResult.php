@@ -6,7 +6,7 @@
 	$number = $_GET['number'] - 1;
 
 	$query = db_query("SELECT username, result FROM games WHERE type='$type'
-		AND username IS NOT NULL ORDER BY result DESC LIMIT 10");
+		AND username!='' ORDER BY result DESC LIMIT 10");
 
 	$games = array();
 	while ($result = mysqli_fetch_array($query)) {

@@ -9,10 +9,10 @@
 			$query = "SELECT id FROM games";
 			break;
 		case "registered":
-			$query = "SELECT id FROM games WHERE username IS NOT NULL";
+			$query = "SELECT id FROM games WHERE username!=''";
 			break;
 		case "anonymous":
-			$query = "SELECT id FROM games WHERE username IS NULL";
+			$query = "SELECT id FROM games WHERE username=''";
 			break;
 	}
 
