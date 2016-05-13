@@ -3,9 +3,12 @@ package com.plazonic.tomislav.yambfriends;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +54,8 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
         for (String key : tvGamesPlayed.keySet()) {
             getNumberOfGamesPlayed(key);
         }
+
+        getResults("an1d5");
     }
 
     @Override
@@ -129,5 +134,19 @@ public class StatsActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent().setClass(getBaseContext(), LeaderboardDialogActivity.class);
         intent.putExtra("type", type);
         startActivity(intent);
+    }
+
+    private void getResults(String type) {
+        restApi.getResults(type, new Callback<JSONObject>() {
+            @Override
+            public void success(JSONObject jsonObject, Response response) {
+                Log.d("AAA", jsonObject.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 }

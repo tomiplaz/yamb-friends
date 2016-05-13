@@ -1,5 +1,7 @@
 package com.plazonic.tomislav.yambfriends;
 
+import org.json.JSONObject;
+
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Field;
@@ -85,6 +87,12 @@ public interface RestApi {
             @Query("username") String username,
             @Query("field") String field,
             Callback<Response> callback
+    );
+
+    @GET("/getResults.php")
+    void getResults(
+            @Query("type") String type,
+            Callback<JSONObject> callback
     );
 
 }
